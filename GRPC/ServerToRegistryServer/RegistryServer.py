@@ -1,16 +1,14 @@
 import sys
 sys.path.insert(1, '../proto')
 
-from GRPC.proto import ServerToRegistryServer_pb2_grpc
-from GRPC.proto import ServerToRegistryServer_pb2
+import ServerToRegistryServer_pb2_grpc
+import ServerToRegistryServer_pb2
 
 import grpc
 from concurrent import futures
 import logging
-import math
-import time
 
-MAX_SERVER = 10
+MAX_SERVER = 2
 Servers = {}
 
 def addServers(name, IP, port):
@@ -22,11 +20,12 @@ def addServers(name, IP, port):
 
 class ServerToRegistryServerServicer(ServerToRegistryServer_pb2_grpc.ServerToRegistryServerServicer):
     def Register(self, request, context):
+        print("JOIN REQUEST FROM " + request.address.IP + ":" + str(request.address.port))
         result = addServers(request.name, request.address.IP, request.address.port)
         if result == 0:
-            return ServerToRegistryServer_pb2.RegisterResponse(status=0)
+            return ServerToRegistryServer_pb2.RegisterResponse(status="SUCESS")
         else:
-            return ServerToRegistryServer_pb2.RegisterResponse(status=1)
+            return ServerToRegistryServer_pb2.RegisterResponse(status="FAIL")
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))

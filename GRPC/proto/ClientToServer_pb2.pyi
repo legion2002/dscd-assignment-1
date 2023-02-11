@@ -1,12 +1,9 @@
 import Article_pb2 as _Article_pb2
-from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
 from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Optional, Union as _Union
 
 DESCRIPTOR: _descriptor.FileDescriptor
-FAIL: Status
-SUCCESS: Status
 
 class GetArticlesRequest(_message.Message):
     __slots__ = ["ArticleResquest", "uuid"]
@@ -31,8 +28,8 @@ class JoinServerRequest(_message.Message):
 class JoinServerResponse(_message.Message):
     __slots__ = ["status"]
     STATUS_FIELD_NUMBER: _ClassVar[int]
-    status: Status
-    def __init__(self, status: _Optional[_Union[Status, str]] = ...) -> None: ...
+    status: str
+    def __init__(self, status: _Optional[str] = ...) -> None: ...
 
 class LeaveServerRequest(_message.Message):
     __slots__ = ["uuid"]
@@ -43,8 +40,8 @@ class LeaveServerRequest(_message.Message):
 class LeaveServerResponse(_message.Message):
     __slots__ = ["status"]
     STATUS_FIELD_NUMBER: _ClassVar[int]
-    status: Status
-    def __init__(self, status: _Optional[_Union[Status, str]] = ...) -> None: ...
+    status: str
+    def __init__(self, status: _Optional[str] = ...) -> None: ...
 
 class PublishArticlesRequest(_message.Message):
     __slots__ = ["Article", "uuid"]
@@ -57,8 +54,5 @@ class PublishArticlesRequest(_message.Message):
 class PublishArticlesResponse(_message.Message):
     __slots__ = ["status"]
     STATUS_FIELD_NUMBER: _ClassVar[int]
-    status: Status
-    def __init__(self, status: _Optional[_Union[Status, str]] = ...) -> None: ...
-
-class Status(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
-    __slots__ = []
+    status: str
+    def __init__(self, status: _Optional[str] = ...) -> None: ...

@@ -1,5 +1,5 @@
 syntax = "proto3";
-package grpc_protos;
+
 
 import "Article.proto";
 
@@ -8,15 +8,10 @@ service ServerToRegistryServer{
 }
 
 message RegisterRequest{
-    Name name = 1;
+    string name = 1;
     Address address = 2;
 }
 
-enum Status{
-    SUCCESS = 0;
-    FAIL = 1;
-}
-
 message RegisterResponse{
-    Status status = 1;
+    string status = 1;
 }

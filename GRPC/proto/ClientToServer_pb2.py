@@ -14,31 +14,29 @@ _sym_db = _symbol_database.Default()
 import Article_pb2 as Article__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x14\x43lientToServer.proto\x12\x0bgrpc_protos\x1a\rArticle.proto\"!\n\x11JoinServerRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\"\"\n\x12LeaveServerRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\"Q\n\x12GetArticlesRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12-\n\x0f\x41rticleResquest\x18\x02 \x01(\x0b\x32\x14.grpc_protos.Article\"M\n\x16PublishArticlesRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12%\n\x07\x41rticle\x18\x02 \x01(\x0b\x32\x14.grpc_protos.Article\"9\n\x12JoinServerResponse\x12#\n\x06status\x18\x01 \x01(\x0e\x32\x13.grpc_protos.Status\":\n\x13LeaveServerResponse\x12#\n\x06status\x18\x01 \x01(\x0e\x32\x13.grpc_protos.Status\"<\n\x13GetArticlesResponse\x12%\n\x07\x41rticle\x18\x01 \x01(\x0b\x32\x14.grpc_protos.Article\">\n\x17PublishArticlesResponse\x12#\n\x06status\x18\x01 \x01(\x0e\x32\x13.grpc_protos.Status*\x1f\n\x06Status\x12\x0b\n\x07SUCCESS\x10\x00\x12\x08\n\x04\x46\x41IL\x10\x01\x32\xeb\x02\n\x0e\x43lientToServer\x12O\n\nJoinServer\x12\x1e.grpc_protos.JoinServerRequest\x1a\x1f.grpc_protos.JoinServerResponse\"\x00\x12R\n\x0bLeaveServer\x12\x1f.grpc_protos.LeaveServerRequest\x1a .grpc_protos.LeaveServerResponse\"\x00\x12T\n\x0bGetArticles\x12\x1f.grpc_protos.GetArticlesRequest\x1a .grpc_protos.GetArticlesResponse\"\x00\x30\x01\x12^\n\x0fPublishArticles\x12#.grpc_protos.PublishArticlesRequest\x1a$.grpc_protos.PublishArticlesResponse\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x14\x43lientToServer.proto\x1a\rArticle.proto\"!\n\x11JoinServerRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\"\"\n\x12LeaveServerRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\"E\n\x12GetArticlesRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12!\n\x0f\x41rticleResquest\x18\x02 \x01(\x0b\x32\x08.Article\"A\n\x16PublishArticlesRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x19\n\x07\x41rticle\x18\x02 \x01(\x0b\x32\x08.Article\"$\n\x12JoinServerResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\"%\n\x13LeaveServerResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\"0\n\x13GetArticlesResponse\x12\x19\n\x07\x41rticle\x18\x01 \x01(\x0b\x32\x08.Article\")\n\x17PublishArticlesResponse\x12\x0e\n\x06status\x18\x01 \x01(\t2\x8b\x02\n\x0e\x43lientToServer\x12\x37\n\nJoinServer\x12\x12.JoinServerRequest\x1a\x13.JoinServerResponse\"\x00\x12:\n\x0bLeaveServer\x12\x13.LeaveServerRequest\x1a\x14.LeaveServerResponse\"\x00\x12<\n\x0bGetArticles\x12\x13.GetArticlesRequest\x1a\x14.GetArticlesResponse\"\x00\x30\x01\x12\x46\n\x0fPublishArticles\x12\x17.PublishArticlesRequest\x1a\x18.PublishArticlesResponse\"\x00\x62\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'ClientToServer_pb2', globals())
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _STATUS._serialized_start=530
-  _STATUS._serialized_end=561
-  _JOINSERVERREQUEST._serialized_start=52
-  _JOINSERVERREQUEST._serialized_end=85
-  _LEAVESERVERREQUEST._serialized_start=87
-  _LEAVESERVERREQUEST._serialized_end=121
-  _GETARTICLESREQUEST._serialized_start=123
-  _GETARTICLESREQUEST._serialized_end=204
-  _PUBLISHARTICLESREQUEST._serialized_start=206
-  _PUBLISHARTICLESREQUEST._serialized_end=283
-  _JOINSERVERRESPONSE._serialized_start=285
-  _JOINSERVERRESPONSE._serialized_end=342
-  _LEAVESERVERRESPONSE._serialized_start=344
-  _LEAVESERVERRESPONSE._serialized_end=402
-  _GETARTICLESRESPONSE._serialized_start=404
-  _GETARTICLESRESPONSE._serialized_end=464
-  _PUBLISHARTICLESRESPONSE._serialized_start=466
-  _PUBLISHARTICLESRESPONSE._serialized_end=528
-  _CLIENTTOSERVER._serialized_start=564
-  _CLIENTTOSERVER._serialized_end=927
+  _JOINSERVERREQUEST._serialized_start=39
+  _JOINSERVERREQUEST._serialized_end=72
+  _LEAVESERVERREQUEST._serialized_start=74
+  _LEAVESERVERREQUEST._serialized_end=108
+  _GETARTICLESREQUEST._serialized_start=110
+  _GETARTICLESREQUEST._serialized_end=179
+  _PUBLISHARTICLESREQUEST._serialized_start=181
+  _PUBLISHARTICLESREQUEST._serialized_end=246
+  _JOINSERVERRESPONSE._serialized_start=248
+  _JOINSERVERRESPONSE._serialized_end=284
+  _LEAVESERVERRESPONSE._serialized_start=286
+  _LEAVESERVERRESPONSE._serialized_end=323
+  _GETARTICLESRESPONSE._serialized_start=325
+  _GETARTICLESRESPONSE._serialized_end=373
+  _PUBLISHARTICLESRESPONSE._serialized_start=375
+  _PUBLISHARTICLESRESPONSE._serialized_end=416
+  _CLIENTTOSERVER._serialized_start=419
+  _CLIENTTOSERVER._serialized_end=686
 # @@protoc_insertion_point(module_scope)

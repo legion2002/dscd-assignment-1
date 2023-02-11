@@ -15,7 +15,7 @@ class ClientToRegistryServerStub(object):
             channel: A grpc.Channel.
         """
         self.GetServerList = channel.unary_stream(
-                '/grpc_protos.ClientToRegistryServer/GetServerList',
+                '/ClientToRegistryServer/GetServerList',
                 request_serializer=ClientToRegistryServer__pb2.GetServerListRequest.SerializeToString,
                 response_deserializer=ClientToRegistryServer__pb2.GetServerListResponse.FromString,
                 )
@@ -40,7 +40,7 @@ def add_ClientToRegistryServerServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'grpc_protos.ClientToRegistryServer', rpc_method_handlers)
+            'ClientToRegistryServer', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
@@ -59,7 +59,7 @@ class ClientToRegistryServer(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_stream(request, target, '/grpc_protos.ClientToRegistryServer/GetServerList',
+        return grpc.experimental.unary_stream(request, target, '/ClientToRegistryServer/GetServerList',
             ClientToRegistryServer__pb2.GetServerListRequest.SerializeToString,
             ClientToRegistryServer__pb2.GetServerListResponse.FromString,
             options, channel_credentials,

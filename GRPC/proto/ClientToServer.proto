@@ -1,5 +1,5 @@
 syntax = "proto3";
-package grpc_protos;
+
 
 import "Article.proto";
 
@@ -8,11 +8,6 @@ service ClientToServer{
     rpc LeaveServer(LeaveServerRequest) returns (LeaveServerResponse) {}
     rpc GetArticles(GetArticlesRequest) returns (stream GetArticlesResponse) {}
     rpc PublishArticles(PublishArticlesRequest) returns (PublishArticlesResponse) {}
-}
-
-enum Status{
-    SUCCESS = 0;
-    FAIL = 1;
 }
 
 message JoinServerRequest{
@@ -34,11 +29,11 @@ message PublishArticlesRequest{
 }
 
 message JoinServerResponse{
-    Status status = 1;
+    string status = 1;
 }
 
 message LeaveServerResponse{
-    Status status = 1;
+    string status = 1;
 }
 
 message GetArticlesResponse{
@@ -46,5 +41,5 @@ message GetArticlesResponse{
 }
 
 message PublishArticlesResponse{
-    Status status = 1;
+    string status = 1;
 }

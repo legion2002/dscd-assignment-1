@@ -14,19 +14,17 @@ _sym_db = _symbol_database.Default()
 import Article_pb2 as Article__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1cServerToRegistryServer.proto\x12\x0bgrpc_protos\x1a\rArticle.proto\"Y\n\x0fRegisterRequest\x12\x1f\n\x04name\x18\x01 \x01(\x0b\x32\x11.grpc_protos.Name\x12%\n\x07\x61\x64\x64ress\x18\x02 \x01(\x0b\x32\x14.grpc_protos.Address\"7\n\x10RegisterResponse\x12#\n\x06status\x18\x01 \x01(\x0e\x32\x13.grpc_protos.Status*\x1f\n\x06Status\x12\x0b\n\x07SUCCESS\x10\x00\x12\x08\n\x04\x46\x41IL\x10\x01\x32\x63\n\x16ServerToRegistryServer\x12I\n\x08Register\x12\x1c.grpc_protos.RegisterRequest\x1a\x1d.grpc_protos.RegisterResponse\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1cServerToRegistryServer.proto\x1a\rArticle.proto\":\n\x0fRegisterRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x19\n\x07\x61\x64\x64ress\x18\x02 \x01(\x0b\x32\x08.Address\"\"\n\x10RegisterResponse\x12\x0e\n\x06status\x18\x01 \x01(\t2K\n\x16ServerToRegistryServer\x12\x31\n\x08Register\x12\x10.RegisterRequest\x1a\x11.RegisterResponse\"\x00\x62\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'ServerToRegistryServer_pb2', globals())
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _STATUS._serialized_start=208
-  _STATUS._serialized_end=239
-  _REGISTERREQUEST._serialized_start=60
-  _REGISTERREQUEST._serialized_end=149
-  _REGISTERRESPONSE._serialized_start=151
-  _REGISTERRESPONSE._serialized_end=206
-  _SERVERTOREGISTRYSERVER._serialized_start=241
-  _SERVERTOREGISTRYSERVER._serialized_end=340
+  _REGISTERREQUEST._serialized_start=47
+  _REGISTERREQUEST._serialized_end=105
+  _REGISTERRESPONSE._serialized_start=107
+  _REGISTERRESPONSE._serialized_end=141
+  _SERVERTOREGISTRYSERVER._serialized_start=143
+  _SERVERTOREGISTRYSERVER._serialized_end=218
 # @@protoc_insertion_point(module_scope)

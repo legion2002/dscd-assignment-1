@@ -14,17 +14,17 @@ _sym_db = _symbol_database.Default()
 import Article_pb2 as Article__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1c\x43lientToRegistryServer.proto\x12\x0bgrpc_protos\x1a\rArticle.proto\"^\n\x14GetServerListRequest\x12\x1f\n\x04name\x18\x01 \x01(\x0b\x32\x11.grpc_protos.Name\x12%\n\x07\x61\x64\x64ress\x18\x02 \x01(\x0b\x32\x14.grpc_protos.Address\"_\n\x15GetServerListResponse\x12\x1f\n\x04name\x18\x01 \x01(\x0b\x32\x11.grpc_protos.Name\x12%\n\x07\x61\x64\x64ress\x18\x02 \x01(\x0b\x32\x14.grpc_protos.Address2t\n\x16\x43lientToRegistryServer\x12Z\n\rGetServerList\x12!.grpc_protos.GetServerListRequest\x1a\".grpc_protos.GetServerListResponse\"\x00\x30\x01\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x1c\x43lientToRegistryServer.proto\x1a\rArticle.proto\"F\n\x14GetServerListRequest\x12\x13\n\x04name\x18\x01 \x01(\x0b\x32\x05.Name\x12\x19\n\x07\x61\x64\x64ress\x18\x02 \x01(\x0b\x32\x08.Address\"G\n\x15GetServerListResponse\x12\x13\n\x04name\x18\x01 \x01(\x0b\x32\x05.Name\x12\x19\n\x07\x61\x64\x64ress\x18\x02 \x01(\x0b\x32\x08.Address2\\\n\x16\x43lientToRegistryServer\x12\x42\n\rGetServerList\x12\x15.GetServerListRequest\x1a\x16.GetServerListResponse\"\x00\x30\x01\x62\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'ClientToRegistryServer_pb2', globals())
 if _descriptor._USE_C_DESCRIPTORS == False:
 
   DESCRIPTOR._options = None
-  _GETSERVERLISTREQUEST._serialized_start=60
-  _GETSERVERLISTREQUEST._serialized_end=154
-  _GETSERVERLISTRESPONSE._serialized_start=156
-  _GETSERVERLISTRESPONSE._serialized_end=251
-  _CLIENTTOREGISTRYSERVER._serialized_start=253
-  _CLIENTTOREGISTRYSERVER._serialized_end=369
+  _GETSERVERLISTREQUEST._serialized_start=47
+  _GETSERVERLISTREQUEST._serialized_end=117
+  _GETSERVERLISTRESPONSE._serialized_start=119
+  _GETSERVERLISTRESPONSE._serialized_end=190
+  _CLIENTTOREGISTRYSERVER._serialized_start=192
+  _CLIENTTOREGISTRYSERVER._serialized_end=284
 # @@protoc_insertion_point(module_scope)

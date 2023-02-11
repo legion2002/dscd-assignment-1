@@ -1,0 +1,7 @@
+syntax = "proto3";
+package grpc_protos;
+
+service ClientToRegistryServer{
+    rpc GetServerList() returns () {}
+}
+

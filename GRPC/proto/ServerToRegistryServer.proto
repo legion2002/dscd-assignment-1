@@ -1,0 +1,25 @@
+syntax = "proto3";
+package grpc_protos;
+
+service ServerToRegistryServer{
+    rpc Register(RegisterRequest) returns (RegisterResponse) {}
+}
+
+message Address{
+    string IP = 1;
+    int port = 2;
+}
+
+message RegisterRequest{
+    string name = 1;
+    Address address = 2;
+}
+
+enum Status{
+    SUCCESS = 0;
+    FAIL = 1;
+}
+
+message RegisterResponse{
+    Status status = 1;
+}

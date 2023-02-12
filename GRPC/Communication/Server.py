@@ -1,7 +1,7 @@
 from __future__ import print_function
 
 import sys
-sys.path.insert(1, '../proto')
+sys.path.insert(1, '/proto')
 
 import ServerToRegistryServer_pb2_grpc
 import ServerToRegistryServer_pb2

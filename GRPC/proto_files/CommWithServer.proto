@@ -3,7 +3,7 @@ syntax = "proto3";
 
 import "Article.proto";
 
-service ClientToServer{
+service CommWithServer{
     rpc JoinServer(JoinServerRequest) returns (JoinServerResponse) {}
     rpc LeaveServer(LeaveServerRequest) returns (LeaveServerResponse) {}
     rpc GetArticles(GetArticlesRequest) returns (stream GetArticlesResponse) {}

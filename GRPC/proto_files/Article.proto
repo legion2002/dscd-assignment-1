@@ -34,7 +34,7 @@ message Article{
 
 }
 
-message ArticleResquest{
+message ArticleRequest{
 
     oneof type{
         Fashion fashion = 1;

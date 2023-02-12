@@ -1,10 +1,10 @@
 syntax = "proto3";
 
-
 import "Article.proto";
 
-service ClientToRegistryServer{
+service CommWithRegistryServer{
     rpc GetServerList(GetServerListRequest) returns (stream GetServerListResponse) {}
+    rpc Register(RegisterRequest) returns (RegisterResponse) {}
 }
 
 message GetServerListRequest{
@@ -15,4 +15,13 @@ message GetServerListRequest{
 message GetServerListResponse{
     Name name = 1;
     Address address = 2;
+}
+
+message RegisterRequest{
+    string name = 1;
+    Address address = 2;
+}
+
+message RegisterResponse{
+    string status = 1;
 }

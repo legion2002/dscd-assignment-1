@@ -29,7 +29,7 @@ class Article(_message.Message):
     time_rec: _timestamp_pb2.Timestamp
     def __init__(self, fashion: _Optional[_Union[Fashion, _Mapping]] = ..., politics: _Optional[_Union[Politics, _Mapping]] = ..., sports: _Optional[_Union[Sports, _Mapping]] = ..., author: _Optional[str] = ..., time_rec: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., content: _Optional[str] = ...) -> None: ...
 
-class ArticleResquest(_message.Message):
+class ArticleRequest(_message.Message):
     __slots__ = ["author", "fashion", "politics", "sports", "time_rec"]
     AUTHOR_FIELD_NUMBER: _ClassVar[int]
     FASHION_FIELD_NUMBER: _ClassVar[int]

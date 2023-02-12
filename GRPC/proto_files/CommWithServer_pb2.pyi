@@ -20,10 +20,14 @@ class GetArticlesResponse(_message.Message):
     def __init__(self, Article: _Optional[_Union[_Article_pb2.Article, _Mapping]] = ...) -> None: ...
 
 class JoinServerRequest(_message.Message):
-    __slots__ = ["uuid"]
+    __slots__ = ["address", "name", "uuid"]
+    ADDRESS_FIELD_NUMBER: _ClassVar[int]
+    NAME_FIELD_NUMBER: _ClassVar[int]
     UUID_FIELD_NUMBER: _ClassVar[int]
+    address: _Article_pb2.Address
+    name: str
     uuid: str
-    def __init__(self, uuid: _Optional[str] = ...) -> None: ...
+    def __init__(self, uuid: _Optional[str] = ..., name: _Optional[str] = ..., address: _Optional[_Union[_Article_pb2.Address, _Mapping]] = ...) -> None: ...
 
 class JoinServerResponse(_message.Message):
     __slots__ = ["status"]

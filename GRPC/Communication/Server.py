@@ -11,6 +11,26 @@ import grpc
 from concurrent import futures
 import logging
 
+MAX_CLIENTS = 2
+CLIENTELE = {}
+
+def addClient(uuid, name, IP, port):
+
+    if name in CLIENTELE.keys():
+        return 1
+
+    for server in CLIENTELE.keys():
+        addr = CLIENTELE[server][0]+str(CLIENTELE[server][1])
+        check_addr = IP+str(port)
+        if addr == check_addr:
+            return 1
+
+    if len(CLIENTELE) < MAX_CLIENTS:
+        CLIENTELE[name] = [IP, port]
+        return 0
+    else:
+        return 1
+
 def registerServer(stub, request):
     status = stub.Register(request)
     print(status)

@@ -12,6 +12,8 @@ service CommWithServer{
 
 message JoinServerRequest{
     string uuid = 1;
+    string name = 2;
+    Address address = 3;
 }
 
 message LeaveServerRequest{

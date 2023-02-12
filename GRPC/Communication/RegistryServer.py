@@ -9,10 +9,20 @@ import grpc
 from concurrent import futures
 import logging
 
-MAX_SERVER = 10
+MAX_SERVER = 2
 Servers = {}
 
 def addServers(name, IP, port):
+
+    if name in Servers.keys():
+        return 1
+
+    for server in Servers.keys():
+        addr = Servers[server][0]+str(Servers[server][1])
+        check_addr = IP+str(port)
+        if addr == check_addr:
+            return 1
+
     if len(Servers) < MAX_SERVER:
         Servers[name] = [IP, port]
         return 0
@@ -30,6 +40,7 @@ class CommWithRegistryServerServicer(CommWithRegistryServer_pb2_grpc.CommWithReg
             return CommWithRegistryServer_pb2.RegisterResponse(status="FAIL")
 
     def GetServerList(self, request, context):
+        print("SERVER LIST REQUEST FROM " + request.address.IP + ":" + str(request.address.port))
         for server in Servers.keys():
             IP = Servers[server][0]
             port = Servers[server][1]

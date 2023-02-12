@@ -1,12 +1,11 @@
 from __future__ import print_function
 
 import sys
-sys.path.insert(1, '/proto')
+sys.path.insert(1, '../proto_files')
 
-import ServerToRegistryServer_pb2_grpc
-import ServerToRegistryServer_pb2
+import CommWithRegistryServer_pb2_grpc
+import CommWithRegistryServer_pb2
 import Article_pb2
-
 
 import grpc
 from concurrent import futures
@@ -17,29 +16,14 @@ def registerServer(stub, request):
     print(status)
 
 
-def run():
+def run(arg):
     with grpc.insecure_channel('localhost:8000') as channel:
-        stub = ServerToRegistryServer_pb2_grpc.ServerToRegistryServerStub(channel)
-        register = False
-        while not register:
-            print("Register Server!")
-            print("Enter Server name : ")
-            name = input()
-            print("Enter Server addres : ")
-            print("Enter IP : ")
-            IP = input()
-            print("Enter port number : ")
-            port = int(input())
-            request = ServerToRegistryServer_pb2.RegisterRequest(name=name, address=Article_pb2.Address(IP=IP, port=port))
-            registerServer(stub, request)
-            print("Do you want to register a server? (y/n)")
-            choice = input()
-            if choice == 'n':
-                register = True
-        
-        
+        stub = CommWithRegistryServer_pb2_grpc.CommWithRegistryServerStub(channel)
+        request = CommWithRegistryServer_pb2.RegisterRequest(name=arg[0], address=Article_pb2.Address(IP=arg[1], port=int(arg[2])))
+        registerServer(stub, request)
 
 
 if __name__ == '__main__':
+    arg = sys.argv[1:]
     logging.basicConfig()
-    run()
+    run(arg)

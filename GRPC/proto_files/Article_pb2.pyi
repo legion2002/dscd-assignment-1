@@ -47,12 +47,6 @@ class Fashion(_message.Message):
     __slots__ = []
     def __init__(self) -> None: ...
 
-class Name(_message.Message):
-    __slots__ = ["name"]
-    NAME_FIELD_NUMBER: _ClassVar[int]
-    name: str
-    def __init__(self, name: _Optional[str] = ...) -> None: ...
-
 class Politics(_message.Message):
     __slots__ = []
     def __init__(self) -> None: ...

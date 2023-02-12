@@ -10,16 +10,16 @@ class GetServerListRequest(_message.Message):
     ADDRESS_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
     address: _Article_pb2.Address
-    name: _Article_pb2.Name
-    def __init__(self, name: _Optional[_Union[_Article_pb2.Name, _Mapping]] = ..., address: _Optional[_Union[_Article_pb2.Address, _Mapping]] = ...) -> None: ...
+    name: str
+    def __init__(self, name: _Optional[str] = ..., address: _Optional[_Union[_Article_pb2.Address, _Mapping]] = ...) -> None: ...
 
 class GetServerListResponse(_message.Message):
     __slots__ = ["address", "name"]
     ADDRESS_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
     address: _Article_pb2.Address
-    name: _Article_pb2.Name
-    def __init__(self, name: _Optional[_Union[_Article_pb2.Name, _Mapping]] = ..., address: _Optional[_Union[_Article_pb2.Address, _Mapping]] = ...) -> None: ...
+    name: str
+    def __init__(self, name: _Optional[str] = ..., address: _Optional[_Union[_Article_pb2.Address, _Mapping]] = ...) -> None: ...
 
 class RegisterRequest(_message.Message):
     __slots__ = ["address", "name"]

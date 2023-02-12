@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rArticle.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"#\n\x07\x41\x64\x64ress\x12\n\n\x02IP\x18\x01 \x01(\t\x12\x0c\n\x04port\x18\x02 \x01(\x05\"\x14\n\x04Name\x12\x0c\n\x04name\x18\x01 \x01(\t\"\t\n\x07\x46\x61shion\"\n\n\x08Politics\"\x08\n\x06Sports\"\xb7\x01\n\x07\x41rticle\x12\x1b\n\x07\x66\x61shion\x18\x01 \x01(\x0b\x32\x08.FashionH\x00\x12\x1d\n\x08politics\x18\x02 \x01(\x0b\x32\t.PoliticsH\x00\x12\x19\n\x06sports\x18\x03 \x01(\x0b\x32\x07.SportsH\x00\x12\x0e\n\x06\x61uthor\x18\x04 \x01(\t\x12,\n\x08time_rec\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0f\n\x07\x63ontent\x18\x06 \x01(\tB\x06\n\x04type\"\xad\x01\n\x0e\x41rticleRequest\x12\x1b\n\x07\x66\x61shion\x18\x01 \x01(\x0b\x32\x08.FashionH\x00\x12\x1d\n\x08politics\x18\x02 \x01(\x0b\x32\t.PoliticsH\x00\x12\x19\n\x06sports\x18\x03 \x01(\x0b\x32\x07.SportsH\x00\x12\x0e\n\x06\x61uthor\x18\x04 \x01(\t\x12,\n\x08time_rec\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x06\n\x04typeb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rArticle.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"#\n\x07\x41\x64\x64ress\x12\n\n\x02IP\x18\x01 \x01(\t\x12\x0c\n\x04port\x18\x02 \x01(\x05\"\t\n\x07\x46\x61shion\"\n\n\x08Politics\"\x08\n\x06Sports\"\xb7\x01\n\x07\x41rticle\x12\x1b\n\x07\x66\x61shion\x18\x01 \x01(\x0b\x32\x08.FashionH\x00\x12\x1d\n\x08politics\x18\x02 \x01(\x0b\x32\t.PoliticsH\x00\x12\x19\n\x06sports\x18\x03 \x01(\x0b\x32\x07.SportsH\x00\x12\x0e\n\x06\x61uthor\x18\x04 \x01(\t\x12,\n\x08time_rec\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0f\n\x07\x63ontent\x18\x06 \x01(\tB\x06\n\x04type\"\xad\x01\n\x0e\x41rticleRequest\x12\x1b\n\x07\x66\x61shion\x18\x01 \x01(\x0b\x32\x08.FashionH\x00\x12\x1d\n\x08politics\x18\x02 \x01(\x0b\x32\t.PoliticsH\x00\x12\x19\n\x06sports\x18\x03 \x01(\x0b\x32\x07.SportsH\x00\x12\x0e\n\x06\x61uthor\x18\x04 \x01(\t\x12,\n\x08time_rec\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x06\n\x04typeb\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'Article_pb2', globals())
@@ -23,16 +23,14 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
   _ADDRESS._serialized_start=50
   _ADDRESS._serialized_end=85
-  _NAME._serialized_start=87
-  _NAME._serialized_end=107
-  _FASHION._serialized_start=109
-  _FASHION._serialized_end=118
-  _POLITICS._serialized_start=120
-  _POLITICS._serialized_end=130
-  _SPORTS._serialized_start=132
-  _SPORTS._serialized_end=140
-  _ARTICLE._serialized_start=143
-  _ARTICLE._serialized_end=326
-  _ARTICLEREQUEST._serialized_start=329
-  _ARTICLEREQUEST._serialized_end=502
+  _FASHION._serialized_start=87
+  _FASHION._serialized_end=96
+  _POLITICS._serialized_start=98
+  _POLITICS._serialized_end=108
+  _SPORTS._serialized_start=110
+  _SPORTS._serialized_end=118
+  _ARTICLE._serialized_start=121
+  _ARTICLE._serialized_end=304
+  _ARTICLEREQUEST._serialized_start=307
+  _ARTICLEREQUEST._serialized_end=480
 # @@protoc_insertion_point(module_scope)

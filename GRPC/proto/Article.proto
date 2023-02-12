@@ -3,6 +3,15 @@ package grpc_protos;
 
 import "google/protobuf/timestamp.proto";
 
+message Address{
+    string IP = 1;
+    int32 port = 2;
+}
+
+message Name{
+    string name =1;
+}
+
 message Fashion{
 }
 

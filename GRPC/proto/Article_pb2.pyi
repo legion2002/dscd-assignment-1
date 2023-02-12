@@ -5,6 +5,14 @@ from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Opti
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
+class Address(_message.Message):
+    __slots__ = ["IP", "port"]
+    IP: str
+    IP_FIELD_NUMBER: _ClassVar[int]
+    PORT_FIELD_NUMBER: _ClassVar[int]
+    port: int
+    def __init__(self, IP: _Optional[str] = ..., port: _Optional[int] = ...) -> None: ...
+
 class Article(_message.Message):
     __slots__ = ["author", "content", "fashion", "politics", "sports", "time_rec"]
     AUTHOR_FIELD_NUMBER: _ClassVar[int]
@@ -44,6 +52,12 @@ class ArticleResponse(_message.Message):
 class Fashion(_message.Message):
     __slots__ = []
     def __init__(self) -> None: ...
+
+class Name(_message.Message):
+    __slots__ = ["name"]
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    name: str
+    def __init__(self, name: _Optional[str] = ...) -> None: ...
 
 class Politics(_message.Message):
     __slots__ = []

@@ -1,7 +1,18 @@
 syntax = "proto3";
 package grpc_protos;
 
+import "Article.proto";
+
 service ClientToRegistryServer{
-    rpc GetServerList() returns () {}
+    rpc GetServerList(GetServerListRequest) returns (stream GetServerListResponse) {}
 }
 
+message GetServerListRequest{
+    Name name = 1;
+    Address address = 2;
+}
+
+message GetServerListResponse{
+    Name name = 1;
+    Address address = 2;
+}

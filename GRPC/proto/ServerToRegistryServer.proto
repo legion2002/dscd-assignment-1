@@ -1,17 +1,14 @@
 syntax = "proto3";
 package grpc_protos;
 
+import "Article.proto";
+
 service ServerToRegistryServer{
     rpc Register(RegisterRequest) returns (RegisterResponse) {}
 }
 
-message Address{
-    string IP = 1;
-    int port = 2;
-}
-
 message RegisterRequest{
-    string name = 1;
+    Name name = 1;
     Address address = 2;
 }
 

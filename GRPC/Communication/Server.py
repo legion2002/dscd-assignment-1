@@ -6,6 +6,8 @@ sys.path.insert(1, '../proto_files')
 import CommWithRegistryServer_pb2_grpc
 import CommWithRegistryServer_pb2
 import Article_pb2
+import CommWithServer_pb2_grpc
+import CommWithServer_pb2
 
 import grpc
 from concurrent import futures
@@ -24,26 +26,47 @@ def addClient(uuid, name, IP, port):
         check_addr = IP+str(port)
         if addr == check_addr:
             return 1
+        if CLIENTELE[server][2] == uuid:
+            return 1
 
     if len(CLIENTELE) < MAX_CLIENTS:
-        CLIENTELE[name] = [IP, port]
+        CLIENTELE[name] = [IP, port, uuid]
         return 0
     else:
         return 1
 
 def registerServer(stub, request):
     status = stub.Register(request)
-    print(status)
+    print(status.__str__())
+    return status
 
 
-def run(arg):
+class CommWithServerServicer(CommWithServer_pb2_grpc.CommWithServerServicer):
+    def JoinServer(self, request, context):
+        print("JOIN REQUEST FROM " + request.uuid)
+        result = addClient(request.uuid, request.name, request.address.IP, request.address.port)
+        if result == 0:
+            return CommWithServer_pb2.JoinServerResponse(status="SUCESS")
+        else:
+            return CommWithServer_pb2.JoinServerResponse(status="FAIL")
+
+def connectToRegistry(arg):
     with grpc.insecure_channel('localhost:8000') as channel:
         stub = CommWithRegistryServer_pb2_grpc.CommWithRegistryServerStub(channel)
         request = CommWithRegistryServer_pb2.RegisterRequest(name=arg[0], address=Article_pb2.Address(IP=arg[1], port=int(arg[2])))
-        registerServer(stub, request)
+        status = registerServer(stub, request)
+
+
+def connectToClient(arg):
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+    CommWithServer_pb2_grpc.add_CommWithServerServicer_to_server(CommWithServerServicer(), server)
+    server.add_insecure_port('[::]:' + str(arg[2]))
+    server.start()
+    server.wait_for_termination()
 
 
 if __name__ == '__main__':
     arg = sys.argv[1:]
     logging.basicConfig()
-    run(arg)
+    connectToRegistry(arg)
+    connectToClient(arg)

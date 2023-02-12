@@ -31,12 +31,13 @@ def runRegistryServer(arg):
 
 
 def joinServer(client, server):
-    address = server[0] + ":" + str(server[1])
+    address = server[1] + ":" + str(server[2])
     with grpc.insecure_channel(address) as channel:
         stub = CommWithServer_pb2_grpc.CommWithServerStub(channel)
         request = CommWithServer_pb2.JoinServerRequest(uuid = unique_id, name=client[0], address=Article_pb2.Address(IP=client[1], port=int(client[2])))
         status = stub.JoinServer(request)
         print(status)
+
 
 
 def leaveServer(client, server):

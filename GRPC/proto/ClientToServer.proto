@@ -1,0 +1,50 @@
+syntax = "proto3";
+package grpc_protos;
+
+import "Article.proto";
+
+service ClientToServer{
+    rpc JoinServer(JoinServerRequest) returns (JoinServerResponse) {}
+    rpc LeaveServer(LeaveServerRequest) returns (LeaveServerResponse) {}
+    rpc GetArticles(GetArticlesRequest) returns (stream GetArticlesResponse) {}
+    rpc PublishArticles(PublishArticlesRequest) returns (PublishArticlesResponse) {}
+}
+
+enum Status{
+    SUCCESS = 0;
+    FAIL = 1;
+}
+
+message JoinServerRequest{
+    string uuid = 1;
+}
+
+message LeaveServerRequest{
+    string uuid = 1;
+}
+
+message GetArticlesRequest{
+    string uuid = 1;
+    Article ArticleResquest = 2;
+}
+
+message PublishArticlesRequest{
+    string uuid = 1;
+    Article Article = 2;
+}
+
+message JoinServerResponse{
+    Status status = 1;
+}
+
+message LeaveServerResponse{
+    Status status = 1;
+}
+
+message GetArticlesResponse{
+    Article Article = 1;
+}
+
+message PublishArticlesResponse{
+    Status status = 1;
+}

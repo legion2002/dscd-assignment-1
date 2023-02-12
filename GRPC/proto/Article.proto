@@ -34,7 +34,7 @@ message Article{
 
 }
 
-message ArticleResponse{
+message ArticleResquest{
 
     oneof type{
         Fashion fashion = 1;
@@ -44,8 +44,4 @@ message ArticleResponse{
 
     string author = 4;
     google.protobuf.Timestamp time_rec = 5;
-}
-
-message ArticleRequest{
-    Article author = 1;
 }

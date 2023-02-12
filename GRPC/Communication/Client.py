@@ -41,7 +41,12 @@ def joinServer(client, server):
 
 
 def leaveServer(client, server):
-    pass
+    address = server[1] + ":" + str(server[2])
+    with grpc.insecure_channel(address) as channel:
+        stub = CommWithServer_pb2_grpc.CommWithServerStub(channel)
+        request = CommWithServer_pb2.LeaveServerRequest(uuid = unique_id)
+        status = stub.LeaveServer(request)
+        print(status)
 
 
 def getArticles(client, server):

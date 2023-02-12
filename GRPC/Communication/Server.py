@@ -35,6 +35,17 @@ def addClient(uuid, name, IP, port):
     else:
         return 1
 
+
+def removeClient(uuid):
+    
+    for client in CLIENTELE.keys():
+        if CLIENTELE[client][2] == uuid:
+            del CLIENTELE[client]
+            return 0
+    
+    return 1
+
+
 def registerServer(stub, request):
     status = stub.Register(request)
     print(status.__str__())
@@ -45,6 +56,14 @@ class CommWithServerServicer(CommWithServer_pb2_grpc.CommWithServerServicer):
     def JoinServer(self, request, context):
         print("JOIN REQUEST FROM " + request.uuid)
         result = addClient(request.uuid, request.name, request.address.IP, request.address.port)
+        if result == 0:
+            return CommWithServer_pb2.JoinServerResponse(status="SUCESS")
+        else:
+            return CommWithServer_pb2.JoinServerResponse(status="FAIL")
+
+    def LeaveServer(self, request, context):
+        print("LEAVE REQUEST FROM " + request.uuid)
+        result = removeClient(request.uuid)
         if result == 0:
             return CommWithServer_pb2.JoinServerResponse(status="SUCESS")
         else:

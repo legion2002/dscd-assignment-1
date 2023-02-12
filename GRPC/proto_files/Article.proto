@@ -20,9 +20,9 @@ message Sports{
 
 message Article{
     oneof type{
-        Fashion fashion = 1;
-        Politics politics = 2;
-        Sports sports = 3;
+        string Fashion = 1;
+        string Politics = 2;
+        string Sports = 3;
     }
 
     string author = 4;

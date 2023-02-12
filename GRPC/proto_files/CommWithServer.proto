@@ -27,7 +27,7 @@ message GetArticlesRequest{
 
 message PublishArticlesRequest{
     string uuid = 1;
-    Article Article = 2;
+    Article article = 2;
 }
 
 message JoinServerResponse{
@@ -39,7 +39,7 @@ message LeaveServerResponse{
 }
 
 message GetArticlesResponse{
-    Article Article = 1;
+    Article article = 1;
 }
 
 message PublishArticlesResponse{

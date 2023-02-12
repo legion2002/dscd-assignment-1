@@ -8,16 +8,16 @@ import CommWithRegistryServer_pb2
 import Article_pb2
 import CommWithServer_pb2_grpc
 import CommWithServer_pb2
-
+from google.protobuf.timestamp_pb2 import Timestamp
 import grpc
 from concurrent import futures
 import logging
 
 MAX_CLIENTS = 2
 CLIENTELE = {}
+ARTICLES = []
 
 def addClient(uuid, name, IP, port):
-
     if name in CLIENTELE.keys():
         return 1
 
@@ -37,7 +37,6 @@ def addClient(uuid, name, IP, port):
 
 
 def removeClient(uuid):
-    
     for client in CLIENTELE.keys():
         if CLIENTELE[client][2] == uuid:
             del CLIENTELE[client]
@@ -48,7 +47,7 @@ def removeClient(uuid):
 
 def registerServer(stub, request):
     status = stub.Register(request)
-    print(status.__str__())
+    print(status)
     return status
 
 
@@ -57,7 +56,7 @@ class CommWithServerServicer(CommWithServer_pb2_grpc.CommWithServerServicer):
         print("JOIN REQUEST FROM " + request.uuid)
         result = addClient(request.uuid, request.name, request.address.IP, request.address.port)
         if result == 0:
-            return CommWithServer_pb2.JoinServerResponse(status="SUCESS")
+            return CommWithServer_pb2.JoinServerResponse(status="SUCCESS")
         else:
             return CommWithServer_pb2.JoinServerResponse(status="FAIL")
 
@@ -65,9 +64,19 @@ class CommWithServerServicer(CommWithServer_pb2_grpc.CommWithServerServicer):
         print("LEAVE REQUEST FROM " + request.uuid)
         result = removeClient(request.uuid)
         if result == 0:
-            return CommWithServer_pb2.JoinServerResponse(status="SUCESS")
+            return CommWithServer_pb2.JoinServerResponse(status="SUCCESS")
         else:
             return CommWithServer_pb2.JoinServerResponse(status="FAIL")
+
+    def PublishArticles(self, request, context):
+        for client in CLIENTELE.keys():
+            if CLIENTELE[client][2] == request.uuid:
+                print("ARTICLE PUBLISH FROM " + request.uuid)
+                timestamp = Timestamp().GetCurrentTime()
+                ARTICLES.append(Article_pb2.Article(type=request.type, author=request.author, time_rec=timestamp, content=request.content))
+                return CommWithServer_pb2.JoinServerResponse(status="SUCCESS")
+
+        return CommWithServer_pb2.JoinServerResponse(status="FAIL")
 
 def connectToRegistry(arg):
     with grpc.insecure_channel('localhost:8000') as channel:

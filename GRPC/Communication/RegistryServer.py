@@ -35,7 +35,7 @@ class CommWithRegistryServerServicer(CommWithRegistryServer_pb2_grpc.CommWithReg
         print("JOIN REQUEST FROM " + request.address.IP + ":" + str(request.address.port))
         result = addServers(request.name, request.address.IP, request.address.port)
         if result == 0:
-            return CommWithRegistryServer_pb2.RegisterResponse(status="SUCESS")
+            return CommWithRegistryServer_pb2.RegisterResponse(status="SUCCESS")
         else:
             return CommWithRegistryServer_pb2.RegisterResponse(status="FAIL")
 

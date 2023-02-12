@@ -14,10 +14,10 @@ class GetArticlesRequest(_message.Message):
     def __init__(self, uuid: _Optional[str] = ..., ArticleResquest: _Optional[_Union[_Article_pb2.Article, _Mapping]] = ...) -> None: ...
 
 class GetArticlesResponse(_message.Message):
-    __slots__ = ["Article"]
+    __slots__ = ["article"]
     ARTICLE_FIELD_NUMBER: _ClassVar[int]
-    Article: _Article_pb2.Article
-    def __init__(self, Article: _Optional[_Union[_Article_pb2.Article, _Mapping]] = ...) -> None: ...
+    article: _Article_pb2.Article
+    def __init__(self, article: _Optional[_Union[_Article_pb2.Article, _Mapping]] = ...) -> None: ...
 
 class JoinServerRequest(_message.Message):
     __slots__ = ["address", "name", "uuid"]
@@ -48,12 +48,12 @@ class LeaveServerResponse(_message.Message):
     def __init__(self, status: _Optional[str] = ...) -> None: ...
 
 class PublishArticlesRequest(_message.Message):
-    __slots__ = ["Article", "uuid"]
+    __slots__ = ["article", "uuid"]
     ARTICLE_FIELD_NUMBER: _ClassVar[int]
-    Article: _Article_pb2.Article
     UUID_FIELD_NUMBER: _ClassVar[int]
+    article: _Article_pb2.Article
     uuid: str
-    def __init__(self, uuid: _Optional[str] = ..., Article: _Optional[_Union[_Article_pb2.Article, _Mapping]] = ...) -> None: ...
+    def __init__(self, uuid: _Optional[str] = ..., article: _Optional[_Union[_Article_pb2.Article, _Mapping]] = ...) -> None: ...
 
 class PublishArticlesResponse(_message.Message):
     __slots__ = ["status"]

@@ -8,12 +8,12 @@ service CommWithRegistryServer{
 }
 
 message GetServerListRequest{
-    Name name = 1;
+    string name = 1;
     Address address = 2;
 }
 
 message GetServerListResponse{
-    Name name = 1;
+    string name = 1;
     Address address = 2;
 }
 

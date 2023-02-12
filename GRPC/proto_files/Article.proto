@@ -8,9 +8,6 @@ message Address{
     int32 port = 2;
 }
 
-message Name{
-    string name =1;
-}
 
 message Fashion{
 }

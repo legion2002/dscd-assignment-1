@@ -3,6 +3,7 @@ sys.path.insert(1, '../proto_files')
 
 import CommWithRegistryServer_pb2_grpc
 import CommWithRegistryServer_pb2
+import Article_pb2
 
 import grpc
 from concurrent import futures
@@ -18,6 +19,7 @@ def addServers(name, IP, port):
     else:
         return 1
 
+
 class CommWithRegistryServerServicer(CommWithRegistryServer_pb2_grpc.CommWithRegistryServerServicer):
     def Register(self, request, context):
         print("JOIN REQUEST FROM " + request.address.IP + ":" + str(request.address.port))
@@ -26,6 +28,12 @@ class CommWithRegistryServerServicer(CommWithRegistryServer_pb2_grpc.CommWithReg
             return CommWithRegistryServer_pb2.RegisterResponse(status="SUCESS")
         else:
             return CommWithRegistryServer_pb2.RegisterResponse(status="FAIL")
+
+    def GetServerList(self, request, context):
+        for server in Servers.keys():
+            IP = Servers[server][0]
+            port = Servers[server][1]
+            yield CommWithRegistryServer_pb2.GetServerListResponse(name=server, address= Article_pb2.Address(IP=IP, port=port))
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))

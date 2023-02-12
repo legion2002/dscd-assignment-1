@@ -56,18 +56,26 @@ def getArticles(client, server):
 def publishArticles(client, server):
     print("Enter Details for Publishing Article")
     print("Type of Article")
-    type = input()
+    typeForArticle = input()
     print("Author of Article")
     author = input()
     print("Content of Article")
     content = input()
     if len(content) > 200:
-        print("Can Not Publish. Content greater than 200 in size")
+        print("Can not publish. Content greater than 200 in size")
     else:
         address = server[1] + ":" + str(server[2])
         with grpc.insecure_channel(address) as channel:
             stub = CommWithServer_pb2_grpc.CommWithServerStub(channel)
-            request = CommWithServer_pb2.PublishArticlesRequest(uuid = unique_id, article=Article_pb2.Article(Fashion=type, author=author, time_rec=0, content=content))
+            typeRequest = 0
+            if typeForArticle.lower() == "fashion":
+                typeRequest = 0
+            elif typeForArticle.lower() == "sports":
+                typeRequest = 0
+            if typeForArticle.lower() == "politics":
+                typeRequest = 0
+            requestedArticle = Article_pb2.ArticleFormat(type=0, author=author, content=content)
+            request = CommWithServer_pb2.PublishArticlesRequest(uuid = unique_id, article=requestedArticle)
             status = stub.PublishArticles(request)
             print(status)
 

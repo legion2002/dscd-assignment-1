@@ -8,16 +8,16 @@ DESCRIPTOR: _descriptor.FileDescriptor
 class GetArticlesRequest(_message.Message):
     __slots__ = ["ArticleResquest", "uuid"]
     ARTICLERESQUEST_FIELD_NUMBER: _ClassVar[int]
-    ArticleResquest: _Article_pb2.Article
+    ArticleResquest: _Article_pb2.ArticleFormat
     UUID_FIELD_NUMBER: _ClassVar[int]
     uuid: str
-    def __init__(self, uuid: _Optional[str] = ..., ArticleResquest: _Optional[_Union[_Article_pb2.Article, _Mapping]] = ...) -> None: ...
+    def __init__(self, uuid: _Optional[str] = ..., ArticleResquest: _Optional[_Union[_Article_pb2.ArticleFormat, _Mapping]] = ...) -> None: ...
 
 class GetArticlesResponse(_message.Message):
     __slots__ = ["article"]
     ARTICLE_FIELD_NUMBER: _ClassVar[int]
-    article: _Article_pb2.Article
-    def __init__(self, article: _Optional[_Union[_Article_pb2.Article, _Mapping]] = ...) -> None: ...
+    article: _Article_pb2.ArticleFormat
+    def __init__(self, article: _Optional[_Union[_Article_pb2.ArticleFormat, _Mapping]] = ...) -> None: ...
 
 class JoinServerRequest(_message.Message):
     __slots__ = ["address", "name", "uuid"]
@@ -51,9 +51,9 @@ class PublishArticlesRequest(_message.Message):
     __slots__ = ["article", "uuid"]
     ARTICLE_FIELD_NUMBER: _ClassVar[int]
     UUID_FIELD_NUMBER: _ClassVar[int]
-    article: _Article_pb2.Article
+    article: _Article_pb2.ArticleFormat
     uuid: str
-    def __init__(self, uuid: _Optional[str] = ..., article: _Optional[_Union[_Article_pb2.Article, _Mapping]] = ...) -> None: ...
+    def __init__(self, uuid: _Optional[str] = ..., article: _Optional[_Union[_Article_pb2.ArticleFormat, _Mapping]] = ...) -> None: ...
 
 class PublishArticlesResponse(_message.Message):
     __slots__ = ["status"]

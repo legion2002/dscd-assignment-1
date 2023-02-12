@@ -18,16 +18,16 @@ message Politics{
 message Sports{
 }
 
-message Article{
-    oneof type{
-        string Fashion = 1;
-        string Politics = 2;
-        string Sports = 3;
+message ArticleFormat{
+    enum Type{
+        FASHION = 0;
+        SPORTS = 1;
+        POLITICS = 2;
     }
-
-    string author = 4;
-    google.protobuf.Timestamp time_rec = 5;
-    string content = 6;
+    Type type = 1;
+    string author = 2;
+    google.protobuf.Timestamp time_rec = 3;
+    string content = 4;
 
 }
 

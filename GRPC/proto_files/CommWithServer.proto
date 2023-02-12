@@ -22,12 +22,12 @@ message LeaveServerRequest{
 
 message GetArticlesRequest{
     string uuid = 1;
-    Article ArticleResquest = 2;
+    ArticleFormat ArticleResquest = 2;
 }
 
 message PublishArticlesRequest{
     string uuid = 1;
-    Article article = 2;
+    ArticleFormat article = 2;
 }
 
 message JoinServerResponse{
@@ -39,7 +39,7 @@ message LeaveServerResponse{
 }
 
 message GetArticlesResponse{
-    Article article = 1;
+    ArticleFormat article = 1;
 }
 
 message PublishArticlesResponse{

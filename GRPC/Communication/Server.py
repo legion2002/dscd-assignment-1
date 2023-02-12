@@ -73,7 +73,7 @@ class CommWithServerServicer(CommWithServer_pb2_grpc.CommWithServerServicer):
             if CLIENTELE[client][2] == request.uuid:
                 print("ARTICLE PUBLISH FROM " + request.uuid)
                 timestamp = Timestamp().GetCurrentTime()
-                ARTICLES.append(Article_pb2.Article(type=request.type, author=request.author, time_rec=timestamp, content=request.content))
+                ARTICLES.append(Article_pb2.ArticleFormat(type=request.article.type, author=request.article.author, time_rec=timestamp, content=request.article.content))
                 return CommWithServer_pb2.JoinServerResponse(status="SUCCESS")
 
         return CommWithServer_pb2.JoinServerResponse(status="FAIL")

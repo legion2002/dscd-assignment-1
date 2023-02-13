@@ -50,7 +50,8 @@ def removeClient(uuid):
 def registerServer(stub, request):
     status = stub.Register(request)
     print(status)
-    return status
+    if "SUCCESS" in str(status):
+        return 0
 
 
 class CommWithServerServicer(CommWithServer_pb2_grpc.CommWithServerServicer):
@@ -106,6 +107,7 @@ def connectToRegistry(arg):
         stub = CommWithRegistryServer_pb2_grpc.CommWithRegistryServerStub(channel)
         request = CommWithRegistryServer_pb2.RegisterRequest(name=arg[0], address=Article_pb2.Address(IP=arg[1], port=int(arg[2])))
         status = registerServer(stub, request)
+        return status
 
 
 def connectToClient(arg):
@@ -119,5 +121,6 @@ def connectToClient(arg):
 if __name__ == '__main__':
     arg = sys.argv[1:]
     logging.basicConfig()
-    connectToRegistry(arg)
-    connectToClient(arg)
+    status = connectToRegistry(arg)
+    if status == 0:
+        connectToClient(arg)

@@ -22,7 +22,7 @@ message LeaveServerRequest{
 
 message GetArticlesRequest{
     string uuid = 1;
-    ArticleFormat ArticleResquest = 2;
+    ArticleRequest article = 2;
 }
 
 message PublishArticlesRequest{

@@ -6,12 +6,12 @@ from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Opti
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class GetArticlesRequest(_message.Message):
-    __slots__ = ["ArticleResquest", "uuid"]
-    ARTICLERESQUEST_FIELD_NUMBER: _ClassVar[int]
-    ArticleResquest: _Article_pb2.ArticleFormat
+    __slots__ = ["article", "uuid"]
+    ARTICLE_FIELD_NUMBER: _ClassVar[int]
     UUID_FIELD_NUMBER: _ClassVar[int]
+    article: _Article_pb2.ArticleRequest
     uuid: str
-    def __init__(self, uuid: _Optional[str] = ..., ArticleResquest: _Optional[_Union[_Article_pb2.ArticleFormat, _Mapping]] = ...) -> None: ...
+    def __init__(self, uuid: _Optional[str] = ..., article: _Optional[_Union[_Article_pb2.ArticleRequest, _Mapping]] = ...) -> None: ...
 
 class GetArticlesResponse(_message.Message):
     __slots__ = ["article"]

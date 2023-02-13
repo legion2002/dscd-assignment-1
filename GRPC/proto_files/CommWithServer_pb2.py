@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 import Article_pb2 as Article__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x14\x43ommWithServer.proto\x1a\rArticle.proto\"J\n\x11JoinServerRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x19\n\x07\x61\x64\x64ress\x18\x03 \x01(\x0b\x32\x08.Address\"\"\n\x12LeaveServerRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\"K\n\x12GetArticlesRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\'\n\x0f\x41rticleResquest\x18\x02 \x01(\x0b\x32\x0e.ArticleFormat\"G\n\x16PublishArticlesRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x1f\n\x07\x61rticle\x18\x02 \x01(\x0b\x32\x0e.ArticleFormat\"$\n\x12JoinServerResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\"%\n\x13LeaveServerResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\"6\n\x13GetArticlesResponse\x12\x1f\n\x07\x61rticle\x18\x01 \x01(\x0b\x32\x0e.ArticleFormat\")\n\x17PublishArticlesResponse\x12\x0e\n\x06status\x18\x01 \x01(\t2\x8b\x02\n\x0e\x43ommWithServer\x12\x37\n\nJoinServer\x12\x12.JoinServerRequest\x1a\x13.JoinServerResponse\"\x00\x12:\n\x0bLeaveServer\x12\x13.LeaveServerRequest\x1a\x14.LeaveServerResponse\"\x00\x12<\n\x0bGetArticles\x12\x13.GetArticlesRequest\x1a\x14.GetArticlesResponse\"\x00\x30\x01\x12\x46\n\x0fPublishArticles\x12\x17.PublishArticlesRequest\x1a\x18.PublishArticlesResponse\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x14\x43ommWithServer.proto\x1a\rArticle.proto\"J\n\x11JoinServerRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x19\n\x07\x61\x64\x64ress\x18\x03 \x01(\x0b\x32\x08.Address\"\"\n\x12LeaveServerRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\"D\n\x12GetArticlesRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12 \n\x07\x61rticle\x18\x02 \x01(\x0b\x32\x0f.ArticleRequest\"G\n\x16PublishArticlesRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x1f\n\x07\x61rticle\x18\x02 \x01(\x0b\x32\x0e.ArticleFormat\"$\n\x12JoinServerResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\"%\n\x13LeaveServerResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\"6\n\x13GetArticlesResponse\x12\x1f\n\x07\x61rticle\x18\x01 \x01(\x0b\x32\x0e.ArticleFormat\")\n\x17PublishArticlesResponse\x12\x0e\n\x06status\x18\x01 \x01(\t2\x8b\x02\n\x0e\x43ommWithServer\x12\x37\n\nJoinServer\x12\x12.JoinServerRequest\x1a\x13.JoinServerResponse\"\x00\x12:\n\x0bLeaveServer\x12\x13.LeaveServerRequest\x1a\x14.LeaveServerResponse\"\x00\x12<\n\x0bGetArticles\x12\x13.GetArticlesRequest\x1a\x14.GetArticlesResponse\"\x00\x30\x01\x12\x46\n\x0fPublishArticles\x12\x17.PublishArticlesRequest\x1a\x18.PublishArticlesResponse\"\x00\x62\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'CommWithServer_pb2', globals())
@@ -26,17 +26,17 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _LEAVESERVERREQUEST._serialized_start=115
   _LEAVESERVERREQUEST._serialized_end=149
   _GETARTICLESREQUEST._serialized_start=151
-  _GETARTICLESREQUEST._serialized_end=226
-  _PUBLISHARTICLESREQUEST._serialized_start=228
-  _PUBLISHARTICLESREQUEST._serialized_end=299
-  _JOINSERVERRESPONSE._serialized_start=301
-  _JOINSERVERRESPONSE._serialized_end=337
-  _LEAVESERVERRESPONSE._serialized_start=339
-  _LEAVESERVERRESPONSE._serialized_end=376
-  _GETARTICLESRESPONSE._serialized_start=378
-  _GETARTICLESRESPONSE._serialized_end=432
-  _PUBLISHARTICLESRESPONSE._serialized_start=434
-  _PUBLISHARTICLESRESPONSE._serialized_end=475
-  _COMMWITHSERVER._serialized_start=478
-  _COMMWITHSERVER._serialized_end=745
+  _GETARTICLESREQUEST._serialized_end=219
+  _PUBLISHARTICLESREQUEST._serialized_start=221
+  _PUBLISHARTICLESREQUEST._serialized_end=292
+  _JOINSERVERRESPONSE._serialized_start=294
+  _JOINSERVERRESPONSE._serialized_end=330
+  _LEAVESERVERRESPONSE._serialized_start=332
+  _LEAVESERVERRESPONSE._serialized_end=369
+  _GETARTICLESRESPONSE._serialized_start=371
+  _GETARTICLESRESPONSE._serialized_end=425
+  _PUBLISHARTICLESRESPONSE._serialized_start=427
+  _PUBLISHARTICLESRESPONSE._serialized_end=468
+  _COMMWITHSERVER._serialized_start=471
+  _COMMWITHSERVER._serialized_end=738
 # @@protoc_insertion_point(module_scope)

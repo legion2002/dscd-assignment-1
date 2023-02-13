@@ -3,15 +3,17 @@ from __future__ import print_function
 import sys
 sys.path.insert(1, '../proto_files')
 
+from concurrent import futures
+from google.protobuf.timestamp_pb2 import Timestamp
+
 import CommWithRegistryServer_pb2_grpc
 import CommWithRegistryServer_pb2
 import Article_pb2
 import CommWithServer_pb2_grpc
 import CommWithServer_pb2
-from google.protobuf.timestamp_pb2 import Timestamp
 import grpc
-from concurrent import futures
 import logging
+import datetime
 
 MAX_CLIENTS = 2
 CLIENTELE = {}
@@ -72,11 +74,32 @@ class CommWithServerServicer(CommWithServer_pb2_grpc.CommWithServerServicer):
         for client in CLIENTELE.keys():
             if CLIENTELE[client][2] == request.uuid:
                 print("ARTICLE PUBLISH FROM " + request.uuid)
-                timestamp = Timestamp().GetCurrentTime()
-                ARTICLES.append(Article_pb2.ArticleFormat(type=request.article.type, author=request.article.author, time_rec=timestamp, content=request.article.content))
+                ct = datetime.datetime.now()
+                timestamp = ct.timestamp()
+                time = Timestamp(seconds=int(timestamp))
+                ARTICLES.append(Article_pb2.ArticleFormat(type=request.article.type, author=request.article.author, time_rec=time, content=request.article.content))
                 return CommWithServer_pb2.JoinServerResponse(status="SUCCESS")
 
         return CommWithServer_pb2.JoinServerResponse(status="FAIL")
+
+    def GetArticles(self, request, context):
+        for client in CLIENTELE.keys():
+            if CLIENTELE[client][2] == request.uuid:
+                print("ARTICLE REQUEST FROM " + request.uuid)
+                for articles in ARTICLES:
+                    timestamp = articles.time_rec
+                    if(request.article.time_rec.seconds <= timestamp.seconds):
+                        # Comparing author
+                        if(request.article.author != "" and request.article.author == articles.author):
+                            if(request.article.type == articles.type):
+                                yield CommWithServer_pb2.GetArticlesResponse(article=articles)
+                            elif(request.article.type == 3):
+                                yield CommWithServer_pb2.GetArticlesResponse(article=articles)
+                        # Comparing type becaiuse author was empty
+                        else:
+                            if(request.article.author == "" and request.article.type == articles.type):
+                                yield CommWithServer_pb2.GetArticlesResponse(article=articles)
+                            
 
 def connectToRegistry(arg):
     with grpc.insecure_channel('localhost:8000') as channel:

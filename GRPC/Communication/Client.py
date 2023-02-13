@@ -8,11 +8,14 @@ import CommWithRegistryServer_pb2
 import CommWithServer_pb2_grpc
 import CommWithServer_pb2
 import Article_pb2
-
 import grpc
-from concurrent import futures
 import logging
 import uuid
+
+from concurrent import futures
+from google.protobuf.timestamp_pb2 import Timestamp
+from datetime import datetime
+
 
 unique_id = str(uuid.uuid1())
 
@@ -50,7 +53,53 @@ def leaveServer(client, server):
 
 
 def getArticles(client, server):
-    pass
+    print("Enter Details for Articles to fetch")
+    info = ["", "", ""]
+    print("Type of Article")
+    info[0] = input()
+    print("Author of Article")
+    info[1] = input()
+    print("Timestamp of Article (yy-mm-dd)")
+    info[2] = input()
+    if info.count("") > 1:
+        print("Illegal Format.")
+    else:
+        typeRequest = 0
+        if info[0].lower() == "fashion":
+            typeRequest = 0
+        elif info[0].lower() == "sports":
+            typeRequest = 1
+        elif info[0].lower() == "politics":
+            typeRequest = 2
+        else:
+            typeRequest = 3
+
+        info[2] = info[2]+" 00:00:00"
+        date_time = datetime.strptime(info[2], '%y-%m-%d %H:%M:%S')
+        timestamp = date_time.timestamp()
+        time = Timestamp(seconds=int(timestamp))
+
+        address = server[1] + ":" + str(server[2])
+        with grpc.insecure_channel(address) as channel:
+            stub = CommWithServer_pb2_grpc.CommWithServerStub(channel)
+            requestedArticle = Article_pb2.ArticleRequest(type=typeRequest, author=info[1], time_rec=time)
+            request = CommWithServer_pb2.GetArticlesRequest(uuid = unique_id, article=requestedArticle)
+            status = stub.GetArticles(request)
+            
+            cnt =1
+            for y in status:
+                x = y.article
+                if x.type == 0:
+                    type = "FASHION"
+                elif x.type == 1:
+                    type = "SPORTS"
+                elif x.type  == 2:
+                    type = "POLITICS"
+
+                date = datetime.fromtimestamp(x.time_rec.seconds)
+
+                print(str(cnt) + ") " + "\n" + type + "\n" + x.author + "\n" + str(date) + "\n" +  x.content)
+                cnt+=1
 
 
 def publishArticles(client, server):
@@ -67,17 +116,21 @@ def publishArticles(client, server):
         address = server[1] + ":" + str(server[2])
         with grpc.insecure_channel(address) as channel:
             stub = CommWithServer_pb2_grpc.CommWithServerStub(channel)
-            typeRequest = 0
+            typeRequest = -1
             if typeForArticle.lower() == "fashion":
                 typeRequest = 0
             elif typeForArticle.lower() == "sports":
-                typeRequest = 0
-            if typeForArticle.lower() == "politics":
-                typeRequest = 0
-            requestedArticle = Article_pb2.ArticleFormat(type=0, author=author, content=content)
-            request = CommWithServer_pb2.PublishArticlesRequest(uuid = unique_id, article=requestedArticle)
-            status = stub.PublishArticles(request)
-            print(status)
+                typeRequest = 1
+            elif typeForArticle.lower() == "politics":
+                typeRequest = 2
+
+            if typeRequest != -1:
+                requestedArticle = Article_pb2.ArticleFormat(type=typeRequest, author=author, content=content)
+                request = CommWithServer_pb2.PublishArticlesRequest(uuid = unique_id, article=requestedArticle)
+                status = stub.PublishArticles(request)
+                print(status)
+            else:
+               print("Can not publish. Wrong Type") 
 
 
 def runServer(client, choice):

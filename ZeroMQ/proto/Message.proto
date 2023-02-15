@@ -1,0 +1,96 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+
+message Address{
+    string IP = 1;
+    int32 port = 2;
+}
+
+message Fashion{
+}
+
+message Politics{
+}
+
+message Sports{
+}
+
+message ArticleFormat{
+    enum Type{
+        FASHION = 0;
+        SPORTS = 1;
+        POLITICS = 2;
+    }
+    Type type = 1;
+    string author = 2;
+    google.protobuf.Timestamp time_rec = 3;
+    string content = 4;
+
+}
+
+message ArticleRequest{
+
+    oneof type{
+        Fashion fashion = 1;
+        Politics politics = 2;
+        Sports sports = 3;
+    }
+
+    string author = 4;
+    google.protobuf.Timestamp time_rec = 5;
+}
+
+message GetServerListRequest{
+    string name = 1;
+    Address address = 2;
+}
+
+message GetServerListResponse{
+    string name = 1;
+    Address address = 2;
+}
+
+message RegisterRequest{
+    string name = 1;
+    Address address = 2;
+}
+
+message RegisterResponse{
+    string status = 1;
+}
+
+message JoinServerRequest{
+    string uuid = 1;
+    string name = 2;
+    Address address = 3;
+}
+
+message LeaveServerRequest{
+    string uuid = 1;
+}
+
+message GetArticlesRequest{
+    string uuid = 1;
+    ArticleFormat ArticleResquest = 2;
+}
+
+message PublishArticlesRequest{
+    string uuid = 1;
+    ArticleFormat article = 2;
+}
+
+message JoinServerResponse{
+    string status = 1;
+}
+
+message LeaveServerResponse{
+    string status = 1;
+}
+
+message GetArticlesResponse{
+    ArticleFormat article = 1;
+}
+
+message PublishArticlesResponse{
+    string status = 1;
+}

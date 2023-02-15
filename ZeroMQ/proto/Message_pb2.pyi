@@ -64,12 +64,14 @@ class GetArticlesResponse(_message.Message):
     def __init__(self, article: _Optional[_Union[ArticleFormat, _Mapping]] = ...) -> None: ...
 
 class GetServerListRequest(_message.Message):
-    __slots__ = ["address", "name"]
+    __slots__ = ["address", "name", "typeOfRequest"]
     ADDRESS_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
+    TYPEOFREQUEST_FIELD_NUMBER: _ClassVar[int]
     address: Address
     name: str
-    def __init__(self, name: _Optional[str] = ..., address: _Optional[_Union[Address, _Mapping]] = ...) -> None: ...
+    typeOfRequest: str
+    def __init__(self, typeOfRequest: _Optional[str] = ..., name: _Optional[str] = ..., address: _Optional[_Union[Address, _Mapping]] = ...) -> None: ...
 
 class GetServerListResponse(_message.Message):
     __slots__ = ["address", "name"]
@@ -126,12 +128,14 @@ class PublishArticlesResponse(_message.Message):
     def __init__(self, status: _Optional[str] = ...) -> None: ...
 
 class RegisterRequest(_message.Message):
-    __slots__ = ["address", "name"]
+    __slots__ = ["address", "name", "typeOfRequest"]
     ADDRESS_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
+    TYPEOFREQUEST_FIELD_NUMBER: _ClassVar[int]
     address: Address
     name: str
-    def __init__(self, name: _Optional[str] = ..., address: _Optional[_Union[Address, _Mapping]] = ...) -> None: ...
+    typeOfRequest: str
+    def __init__(self, typeOfRequest: _Optional[str] = ..., name: _Optional[str] = ..., address: _Optional[_Union[Address, _Mapping]] = ...) -> None: ...
 
 class RegisterResponse(_message.Message):
     __slots__ = ["status"]

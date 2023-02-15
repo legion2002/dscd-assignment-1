@@ -41,8 +41,9 @@ message ArticleRequest{
 }
 
 message GetServerListRequest{
-    string name = 1;
-    Address address = 2;
+    string typeOfRequest = 1;
+    string name = 2;
+    Address address = 3;
 }
 
 message GetServerListResponse{
@@ -51,13 +52,18 @@ message GetServerListResponse{
 }
 
 message RegisterRequest{
-    string name = 1;
-    Address address = 2;
+    string typeOfRequest = 1;
+    string name = 2;
+    Address address = 3;
 }
 
 message RegisterResponse{
     string status = 1;
 }
+
+
+
+
 
 message JoinServerRequest{
     string uuid = 1;

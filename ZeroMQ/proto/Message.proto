@@ -6,6 +6,11 @@ message Address{
     int32 port = 2;
 }
 
+message ServerAddress{
+    string name = 1;
+    Address address = 2;
+}
+
 message Fashion{
 }
 
@@ -47,8 +52,7 @@ message GetServerListRequest{
 }
 
 message GetServerListResponse{
-    string name = 1;
-    Address address = 2;
+    repeated ServerAddress serverDetails = 1;
 }
 
 message RegisterRequest{

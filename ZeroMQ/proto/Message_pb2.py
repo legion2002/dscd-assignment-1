@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rMessage.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"#\n\x07\x41\x64\x64ress\x12\n\n\x02IP\x18\x01 \x01(\t\x12\x0c\n\x04port\x18\x02 \x01(\x05\"\t\n\x07\x46\x61shion\"\n\n\x08Politics\"\x08\n\x06Sports\"\xb0\x01\n\rArticleFormat\x12!\n\x04type\x18\x01 \x01(\x0e\x32\x13.ArticleFormat.Type\x12\x0e\n\x06\x61uthor\x18\x02 \x01(\t\x12,\n\x08time_rec\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0f\n\x07\x63ontent\x18\x04 \x01(\t\"-\n\x04Type\x12\x0b\n\x07\x46\x41SHION\x10\x00\x12\n\n\x06SPORTS\x10\x01\x12\x0c\n\x08POLITICS\x10\x02\"\xad\x01\n\x0e\x41rticleRequest\x12\x1b\n\x07\x66\x61shion\x18\x01 \x01(\x0b\x32\x08.FashionH\x00\x12\x1d\n\x08politics\x18\x02 \x01(\x0b\x32\t.PoliticsH\x00\x12\x19\n\x06sports\x18\x03 \x01(\x0b\x32\x07.SportsH\x00\x12\x0e\n\x06\x61uthor\x18\x04 \x01(\t\x12,\n\x08time_rec\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x06\n\x04type\"V\n\x14GetServerListRequest\x12\x15\n\rtypeOfRequest\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x19\n\x07\x61\x64\x64ress\x18\x03 \x01(\x0b\x32\x08.Address\"@\n\x15GetServerListResponse\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x19\n\x07\x61\x64\x64ress\x18\x02 \x01(\x0b\x32\x08.Address\"Q\n\x0fRegisterRequest\x12\x15\n\rtypeOfRequest\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x19\n\x07\x61\x64\x64ress\x18\x03 \x01(\x0b\x32\x08.Address\"\"\n\x10RegisterResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\"J\n\x11JoinServerRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x19\n\x07\x61\x64\x64ress\x18\x03 \x01(\x0b\x32\x08.Address\"\"\n\x12LeaveServerRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\"K\n\x12GetArticlesRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\'\n\x0f\x41rticleResquest\x18\x02 \x01(\x0b\x32\x0e.ArticleFormat\"G\n\x16PublishArticlesRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x1f\n\x07\x61rticle\x18\x02 \x01(\x0b\x32\x0e.ArticleFormat\"$\n\x12JoinServerResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\"%\n\x13LeaveServerResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\"6\n\x13GetArticlesResponse\x12\x1f\n\x07\x61rticle\x18\x01 \x01(\x0b\x32\x0e.ArticleFormat\")\n\x17PublishArticlesResponse\x12\x0e\n\x06status\x18\x01 \x01(\tb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rMessage.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"#\n\x07\x41\x64\x64ress\x12\n\n\x02IP\x18\x01 \x01(\t\x12\x0c\n\x04port\x18\x02 \x01(\x05\"8\n\rServerAddress\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x19\n\x07\x61\x64\x64ress\x18\x02 \x01(\x0b\x32\x08.Address\"\t\n\x07\x46\x61shion\"\n\n\x08Politics\"\x08\n\x06Sports\"\xb0\x01\n\rArticleFormat\x12!\n\x04type\x18\x01 \x01(\x0e\x32\x13.ArticleFormat.Type\x12\x0e\n\x06\x61uthor\x18\x02 \x01(\t\x12,\n\x08time_rec\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0f\n\x07\x63ontent\x18\x04 \x01(\t\"-\n\x04Type\x12\x0b\n\x07\x46\x41SHION\x10\x00\x12\n\n\x06SPORTS\x10\x01\x12\x0c\n\x08POLITICS\x10\x02\"\xad\x01\n\x0e\x41rticleRequest\x12\x1b\n\x07\x66\x61shion\x18\x01 \x01(\x0b\x32\x08.FashionH\x00\x12\x1d\n\x08politics\x18\x02 \x01(\x0b\x32\t.PoliticsH\x00\x12\x19\n\x06sports\x18\x03 \x01(\x0b\x32\x07.SportsH\x00\x12\x0e\n\x06\x61uthor\x18\x04 \x01(\t\x12,\n\x08time_rec\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x06\n\x04type\"V\n\x14GetServerListRequest\x12\x15\n\rtypeOfRequest\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x19\n\x07\x61\x64\x64ress\x18\x03 \x01(\x0b\x32\x08.Address\">\n\x15GetServerListResponse\x12%\n\rserverDetails\x18\x01 \x03(\x0b\x32\x0e.ServerAddress\"Q\n\x0fRegisterRequest\x12\x15\n\rtypeOfRequest\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x19\n\x07\x61\x64\x64ress\x18\x03 \x01(\x0b\x32\x08.Address\"\"\n\x10RegisterResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\"J\n\x11JoinServerRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x19\n\x07\x61\x64\x64ress\x18\x03 \x01(\x0b\x32\x08.Address\"\"\n\x12LeaveServerRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\"K\n\x12GetArticlesRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\'\n\x0f\x41rticleResquest\x18\x02 \x01(\x0b\x32\x0e.ArticleFormat\"G\n\x16PublishArticlesRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x1f\n\x07\x61rticle\x18\x02 \x01(\x0b\x32\x0e.ArticleFormat\"$\n\x12JoinServerResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\"%\n\x13LeaveServerResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\"6\n\x13GetArticlesResponse\x12\x1f\n\x07\x61rticle\x18\x01 \x01(\x0b\x32\x0e.ArticleFormat\")\n\x17PublishArticlesResponse\x12\x0e\n\x06status\x18\x01 \x01(\tb\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'Message_pb2', globals())
@@ -23,40 +23,42 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   DESCRIPTOR._options = None
   _ADDRESS._serialized_start=50
   _ADDRESS._serialized_end=85
-  _FASHION._serialized_start=87
-  _FASHION._serialized_end=96
-  _POLITICS._serialized_start=98
-  _POLITICS._serialized_end=108
-  _SPORTS._serialized_start=110
-  _SPORTS._serialized_end=118
-  _ARTICLEFORMAT._serialized_start=121
-  _ARTICLEFORMAT._serialized_end=297
-  _ARTICLEFORMAT_TYPE._serialized_start=252
-  _ARTICLEFORMAT_TYPE._serialized_end=297
-  _ARTICLEREQUEST._serialized_start=300
-  _ARTICLEREQUEST._serialized_end=473
-  _GETSERVERLISTREQUEST._serialized_start=475
-  _GETSERVERLISTREQUEST._serialized_end=561
-  _GETSERVERLISTRESPONSE._serialized_start=563
-  _GETSERVERLISTRESPONSE._serialized_end=627
-  _REGISTERREQUEST._serialized_start=629
-  _REGISTERREQUEST._serialized_end=710
-  _REGISTERRESPONSE._serialized_start=712
-  _REGISTERRESPONSE._serialized_end=746
-  _JOINSERVERREQUEST._serialized_start=748
-  _JOINSERVERREQUEST._serialized_end=822
-  _LEAVESERVERREQUEST._serialized_start=824
-  _LEAVESERVERREQUEST._serialized_end=858
-  _GETARTICLESREQUEST._serialized_start=860
-  _GETARTICLESREQUEST._serialized_end=935
-  _PUBLISHARTICLESREQUEST._serialized_start=937
-  _PUBLISHARTICLESREQUEST._serialized_end=1008
-  _JOINSERVERRESPONSE._serialized_start=1010
-  _JOINSERVERRESPONSE._serialized_end=1046
-  _LEAVESERVERRESPONSE._serialized_start=1048
-  _LEAVESERVERRESPONSE._serialized_end=1085
-  _GETARTICLESRESPONSE._serialized_start=1087
-  _GETARTICLESRESPONSE._serialized_end=1141
-  _PUBLISHARTICLESRESPONSE._serialized_start=1143
-  _PUBLISHARTICLESRESPONSE._serialized_end=1184
+  _SERVERADDRESS._serialized_start=87
+  _SERVERADDRESS._serialized_end=143
+  _FASHION._serialized_start=145
+  _FASHION._serialized_end=154
+  _POLITICS._serialized_start=156
+  _POLITICS._serialized_end=166
+  _SPORTS._serialized_start=168
+  _SPORTS._serialized_end=176
+  _ARTICLEFORMAT._serialized_start=179
+  _ARTICLEFORMAT._serialized_end=355
+  _ARTICLEFORMAT_TYPE._serialized_start=310
+  _ARTICLEFORMAT_TYPE._serialized_end=355
+  _ARTICLEREQUEST._serialized_start=358
+  _ARTICLEREQUEST._serialized_end=531
+  _GETSERVERLISTREQUEST._serialized_start=533
+  _GETSERVERLISTREQUEST._serialized_end=619
+  _GETSERVERLISTRESPONSE._serialized_start=621
+  _GETSERVERLISTRESPONSE._serialized_end=683
+  _REGISTERREQUEST._serialized_start=685
+  _REGISTERREQUEST._serialized_end=766
+  _REGISTERRESPONSE._serialized_start=768
+  _REGISTERRESPONSE._serialized_end=802
+  _JOINSERVERREQUEST._serialized_start=804
+  _JOINSERVERREQUEST._serialized_end=878
+  _LEAVESERVERREQUEST._serialized_start=880
+  _LEAVESERVERREQUEST._serialized_end=914
+  _GETARTICLESREQUEST._serialized_start=916
+  _GETARTICLESREQUEST._serialized_end=991
+  _PUBLISHARTICLESREQUEST._serialized_start=993
+  _PUBLISHARTICLESREQUEST._serialized_end=1064
+  _JOINSERVERRESPONSE._serialized_start=1066
+  _JOINSERVERRESPONSE._serialized_end=1102
+  _LEAVESERVERRESPONSE._serialized_start=1104
+  _LEAVESERVERRESPONSE._serialized_end=1141
+  _GETARTICLESRESPONSE._serialized_start=1143
+  _GETARTICLESRESPONSE._serialized_end=1197
+  _PUBLISHARTICLESRESPONSE._serialized_start=1199
+  _PUBLISHARTICLESRESPONSE._serialized_end=1240
 # @@protoc_insertion_point(module_scope)

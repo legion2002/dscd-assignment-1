@@ -1,8 +1,9 @@
 from google.protobuf import timestamp_pb2 as _timestamp_pb2
+from google.protobuf.internal import containers as _containers
 from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
-from typing import ClassVar as _ClassVar, Mapping as _Mapping, Optional as _Optional, Union as _Union
+from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Mapping, Optional as _Optional, Union as _Union
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
@@ -74,12 +75,10 @@ class GetServerListRequest(_message.Message):
     def __init__(self, typeOfRequest: _Optional[str] = ..., name: _Optional[str] = ..., address: _Optional[_Union[Address, _Mapping]] = ...) -> None: ...
 
 class GetServerListResponse(_message.Message):
-    __slots__ = ["address", "name"]
-    ADDRESS_FIELD_NUMBER: _ClassVar[int]
-    NAME_FIELD_NUMBER: _ClassVar[int]
-    address: Address
-    name: str
-    def __init__(self, name: _Optional[str] = ..., address: _Optional[_Union[Address, _Mapping]] = ...) -> None: ...
+    __slots__ = ["serverDetails"]
+    SERVERDETAILS_FIELD_NUMBER: _ClassVar[int]
+    serverDetails: _containers.RepeatedCompositeFieldContainer[ServerAddress]
+    def __init__(self, serverDetails: _Optional[_Iterable[_Union[ServerAddress, _Mapping]]] = ...) -> None: ...
 
 class JoinServerRequest(_message.Message):
     __slots__ = ["address", "name", "uuid"]
@@ -142,6 +141,14 @@ class RegisterResponse(_message.Message):
     STATUS_FIELD_NUMBER: _ClassVar[int]
     status: str
     def __init__(self, status: _Optional[str] = ...) -> None: ...
+
+class ServerAddress(_message.Message):
+    __slots__ = ["address", "name"]
+    ADDRESS_FIELD_NUMBER: _ClassVar[int]
+    NAME_FIELD_NUMBER: _ClassVar[int]
+    address: Address
+    name: str
+    def __init__(self, name: _Optional[str] = ..., address: _Optional[_Union[Address, _Mapping]] = ...) -> None: ...
 
 class Sports(_message.Message):
     __slots__ = []

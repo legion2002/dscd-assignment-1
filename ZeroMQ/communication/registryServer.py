@@ -44,12 +44,17 @@ def Register(request : Message_pb2.RegisterRequest):
             socket.send(serialized_msg)
             time.sleep(1)
 
-# def GetServerList(request : Message_pb2.GetServerListRequest):
-#         print("SERVER LIST REQUEST FROM " + request.address.IP + ":" + str(request.address.port))
-#         for server in Servers.keys():
-#             IP = Servers[server][0]
-#             port = Servers[server][1]
-#             yield Message_pb2.GetServerListResponse(name=server, address= Article_pb2.Address(IP=IP, port=port))
+def GetServerList(request : Message_pb2.GetServerListRequest):
+        print("SERVER LIST REQUEST FROM " + request.address.IP + ":" + str(request.address.port))
+        serverList = []
+        for server in Servers.keys():
+            IP = Servers[server][0]
+            port = Servers[server][1]
+            serverList.append(Message_pb2.ServerAddress(name=server, address= Message_pb2.Address(IP=IP, port=port)))
+        response = Message_pb2.GetServerListResponse()
+        response.serverDetails.extend(serverList)
+        socket.send(response.SerializeToString())
+
 
 def serve():
     while True:
@@ -63,7 +68,8 @@ def serve():
             Register(registerRequest)
             time.sleep(1)
         elif(serverListRequest.typeOfRequest == "getServerList"):
-            pass
+            GetServerList(serverListRequest)
+            time.sleep(1)
 
 if __name__ == '__main__':
     serve()

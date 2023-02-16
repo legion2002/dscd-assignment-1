@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 from google.protobuf import timestamp_pb2 as google_dot_protobuf_dot_timestamp__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rMessage.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"#\n\x07\x41\x64\x64ress\x12\n\n\x02IP\x18\x01 \x01(\t\x12\x0c\n\x04port\x18\x02 \x01(\x05\"8\n\rServerAddress\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x19\n\x07\x61\x64\x64ress\x18\x02 \x01(\x0b\x32\x08.Address\"\t\n\x07\x46\x61shion\"\n\n\x08Politics\"\x08\n\x06Sports\"\xb0\x01\n\rArticleFormat\x12!\n\x04type\x18\x01 \x01(\x0e\x32\x13.ArticleFormat.Type\x12\x0e\n\x06\x61uthor\x18\x02 \x01(\t\x12,\n\x08time_rec\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0f\n\x07\x63ontent\x18\x04 \x01(\t\"-\n\x04Type\x12\x0b\n\x07\x46\x41SHION\x10\x00\x12\n\n\x06SPORTS\x10\x01\x12\x0c\n\x08POLITICS\x10\x02\"\xad\x01\n\x0e\x41rticleRequest\x12\x1b\n\x07\x66\x61shion\x18\x01 \x01(\x0b\x32\x08.FashionH\x00\x12\x1d\n\x08politics\x18\x02 \x01(\x0b\x32\t.PoliticsH\x00\x12\x19\n\x06sports\x18\x03 \x01(\x0b\x32\x07.SportsH\x00\x12\x0e\n\x06\x61uthor\x18\x04 \x01(\t\x12,\n\x08time_rec\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x06\n\x04type\"V\n\x14GetServerListRequest\x12\x15\n\rtypeOfRequest\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x19\n\x07\x61\x64\x64ress\x18\x03 \x01(\x0b\x32\x08.Address\">\n\x15GetServerListResponse\x12%\n\rserverDetails\x18\x01 \x03(\x0b\x32\x0e.ServerAddress\"Q\n\x0fRegisterRequest\x12\x15\n\rtypeOfRequest\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x19\n\x07\x61\x64\x64ress\x18\x03 \x01(\x0b\x32\x08.Address\"\"\n\x10RegisterResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\"J\n\x11JoinServerRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x19\n\x07\x61\x64\x64ress\x18\x03 \x01(\x0b\x32\x08.Address\"\"\n\x12LeaveServerRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\"K\n\x12GetArticlesRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\'\n\x0f\x41rticleResquest\x18\x02 \x01(\x0b\x32\x0e.ArticleFormat\"G\n\x16PublishArticlesRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x1f\n\x07\x61rticle\x18\x02 \x01(\x0b\x32\x0e.ArticleFormat\"$\n\x12JoinServerResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\"%\n\x13LeaveServerResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\"6\n\x13GetArticlesResponse\x12\x1f\n\x07\x61rticle\x18\x01 \x01(\x0b\x32\x0e.ArticleFormat\")\n\x17PublishArticlesResponse\x12\x0e\n\x06status\x18\x01 \x01(\tb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rMessage.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"#\n\x07\x41\x64\x64ress\x12\n\n\x02IP\x18\x01 \x01(\t\x12\x0c\n\x04port\x18\x02 \x01(\x05\"8\n\rServerAddress\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x19\n\x07\x61\x64\x64ress\x18\x02 \x01(\x0b\x32\x08.Address\"\t\n\x07\x46\x61shion\"\n\n\x08Politics\"\x08\n\x06Sports\"\xb0\x01\n\rArticleFormat\x12!\n\x04type\x18\x01 \x01(\x0e\x32\x13.ArticleFormat.Type\x12\x0e\n\x06\x61uthor\x18\x02 \x01(\t\x12,\n\x08time_rec\x18\x03 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0f\n\x07\x63ontent\x18\x04 \x01(\t\"-\n\x04Type\x12\x0b\n\x07\x46\x41SHION\x10\x00\x12\n\n\x06SPORTS\x10\x01\x12\x0c\n\x08POLITICS\x10\x02\"\xad\x01\n\x0e\x41rticleRequest\x12\x1b\n\x07\x66\x61shion\x18\x01 \x01(\x0b\x32\x08.FashionH\x00\x12\x1d\n\x08politics\x18\x02 \x01(\x0b\x32\t.PoliticsH\x00\x12\x19\n\x06sports\x18\x03 \x01(\x0b\x32\x07.SportsH\x00\x12\x0e\n\x06\x61uthor\x18\x04 \x01(\t\x12,\n\x08time_rec\x18\x05 \x01(\x0b\x32\x1a.google.protobuf.TimestampB\x06\n\x04type\"V\n\x14GetServerListRequest\x12\x15\n\rtypeOfRequest\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x19\n\x07\x61\x64\x64ress\x18\x03 \x01(\x0b\x32\x08.Address\">\n\x15GetServerListResponse\x12%\n\rserverDetails\x18\x01 \x03(\x0b\x32\x0e.ServerAddress\"Q\n\x0fRegisterRequest\x12\x15\n\rtypeOfRequest\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x19\n\x07\x61\x64\x64ress\x18\x03 \x01(\x0b\x32\x08.Address\"\"\n\x10RegisterResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\"a\n\x11JoinServerRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x19\n\x07\x61\x64\x64ress\x18\x03 \x01(\x0b\x32\x08.Address\x12\x15\n\rtypeOfRequest\x18\x04 \x01(\t\"9\n\x12LeaveServerRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x15\n\rtypeOfRequest\x18\x02 \x01(\t\"K\n\x12GetArticlesRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\'\n\x0f\x41rticleResquest\x18\x02 \x01(\x0b\x32\x0e.ArticleFormat\"G\n\x16PublishArticlesRequest\x12\x0c\n\x04uuid\x18\x01 \x01(\t\x12\x1f\n\x07\x61rticle\x18\x02 \x01(\x0b\x32\x0e.ArticleFormat\"$\n\x12JoinServerResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\"%\n\x13LeaveServerResponse\x12\x0e\n\x06status\x18\x01 \x01(\t\"6\n\x13GetArticlesResponse\x12\x1f\n\x07\x61rticle\x18\x01 \x01(\x0b\x32\x0e.ArticleFormat\")\n\x17PublishArticlesResponse\x12\x0e\n\x06status\x18\x01 \x01(\tb\x06proto3')
 
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, globals())
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'Message_pb2', globals())
@@ -46,19 +46,19 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _REGISTERRESPONSE._serialized_start=768
   _REGISTERRESPONSE._serialized_end=802
   _JOINSERVERREQUEST._serialized_start=804
-  _JOINSERVERREQUEST._serialized_end=878
-  _LEAVESERVERREQUEST._serialized_start=880
-  _LEAVESERVERREQUEST._serialized_end=914
-  _GETARTICLESREQUEST._serialized_start=916
-  _GETARTICLESREQUEST._serialized_end=991
-  _PUBLISHARTICLESREQUEST._serialized_start=993
-  _PUBLISHARTICLESREQUEST._serialized_end=1064
-  _JOINSERVERRESPONSE._serialized_start=1066
-  _JOINSERVERRESPONSE._serialized_end=1102
-  _LEAVESERVERRESPONSE._serialized_start=1104
-  _LEAVESERVERRESPONSE._serialized_end=1141
-  _GETARTICLESRESPONSE._serialized_start=1143
-  _GETARTICLESRESPONSE._serialized_end=1197
-  _PUBLISHARTICLESRESPONSE._serialized_start=1199
-  _PUBLISHARTICLESRESPONSE._serialized_end=1240
+  _JOINSERVERREQUEST._serialized_end=901
+  _LEAVESERVERREQUEST._serialized_start=903
+  _LEAVESERVERREQUEST._serialized_end=960
+  _GETARTICLESREQUEST._serialized_start=962
+  _GETARTICLESREQUEST._serialized_end=1037
+  _PUBLISHARTICLESREQUEST._serialized_start=1039
+  _PUBLISHARTICLESREQUEST._serialized_end=1110
+  _JOINSERVERRESPONSE._serialized_start=1112
+  _JOINSERVERRESPONSE._serialized_end=1148
+  _LEAVESERVERRESPONSE._serialized_start=1150
+  _LEAVESERVERRESPONSE._serialized_end=1187
+  _GETARTICLESRESPONSE._serialized_start=1189
+  _GETARTICLESRESPONSE._serialized_end=1243
+  _PUBLISHARTICLESRESPONSE._serialized_start=1245
+  _PUBLISHARTICLESRESPONSE._serialized_end=1286
 # @@protoc_insertion_point(module_scope)

@@ -81,14 +81,16 @@ class GetServerListResponse(_message.Message):
     def __init__(self, serverDetails: _Optional[_Iterable[_Union[ServerAddress, _Mapping]]] = ...) -> None: ...
 
 class JoinServerRequest(_message.Message):
-    __slots__ = ["address", "name", "uuid"]
+    __slots__ = ["address", "name", "typeOfRequest", "uuid"]
     ADDRESS_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
+    TYPEOFREQUEST_FIELD_NUMBER: _ClassVar[int]
     UUID_FIELD_NUMBER: _ClassVar[int]
     address: Address
     name: str
+    typeOfRequest: str
     uuid: str
-    def __init__(self, uuid: _Optional[str] = ..., name: _Optional[str] = ..., address: _Optional[_Union[Address, _Mapping]] = ...) -> None: ...
+    def __init__(self, uuid: _Optional[str] = ..., name: _Optional[str] = ..., address: _Optional[_Union[Address, _Mapping]] = ..., typeOfRequest: _Optional[str] = ...) -> None: ...
 
 class JoinServerResponse(_message.Message):
     __slots__ = ["status"]
@@ -97,10 +99,12 @@ class JoinServerResponse(_message.Message):
     def __init__(self, status: _Optional[str] = ...) -> None: ...
 
 class LeaveServerRequest(_message.Message):
-    __slots__ = ["uuid"]
+    __slots__ = ["typeOfRequest", "uuid"]
+    TYPEOFREQUEST_FIELD_NUMBER: _ClassVar[int]
     UUID_FIELD_NUMBER: _ClassVar[int]
+    typeOfRequest: str
     uuid: str
-    def __init__(self, uuid: _Optional[str] = ...) -> None: ...
+    def __init__(self, uuid: _Optional[str] = ..., typeOfRequest: _Optional[str] = ...) -> None: ...
 
 class LeaveServerResponse(_message.Message):
     __slots__ = ["status"]

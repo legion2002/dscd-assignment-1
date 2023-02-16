@@ -73,10 +73,12 @@ message JoinServerRequest{
     string uuid = 1;
     string name = 2;
     Address address = 3;
+    string typeOfRequest = 4;
 }
 
 message LeaveServerRequest{
     string uuid = 1;
+    string typeOfRequest = 2;
 }
 
 message GetArticlesRequest{

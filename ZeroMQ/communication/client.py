@@ -2,7 +2,7 @@ import sys
 sys.path.insert(1, '../proto')
 
 from google.protobuf.timestamp_pb2 import Timestamp
-import datetime
+from datetime import datetime
 import uuid
 import Message_pb2
 import time
@@ -15,7 +15,6 @@ def joinServer(client, server):
     context = zmq.Context()
     socket = context.socket(zmq.REQ)
     address = server[1] + ":" + str(server[2])
-    print(address)
     socket.connect("tcp://" + address)
     socket.send(Message_pb2.JoinServerRequest(uuid=unique_id, name=client[0], address=Message_pb2.Address(IP=client[1], port=int(client[2])), typeOfRequest="joinServer").SerializeToString())
     message = socket.recv()
@@ -59,7 +58,6 @@ def publishArticles(client, server):
             context = zmq.Context()
             socket = context.socket(zmq.REQ)
             address = server[1] + ":" + str(server[2])
-            print(address)
             socket.connect("tcp://" + address)
             socket.send(Message_pb2.PublishArticlesRequest(uuid=unique_id,  article=Message_pb2.ArticleFormat(type=typeRequest, author=author, content=content), typeOfRequest="publishArticle").SerializeToString())
             message = socket.recv()
@@ -69,11 +67,64 @@ def publishArticles(client, server):
         else:
             print("Can not publish. Wrong Type") 
 
+def getArticles(client, server):
+    print("Enter Details for Articles to fetch")
+    info = ["", "", ""]
+    print("Type of Article")
+    info[0] = input()
+    print("Author of Article")
+    info[1] = input()
+    print("Timestamp of Article (yy-mm-dd)")
+    info[2] = input()
+    if info.count("") > 1:
+        print("Illegal Format.")
+    else:
+        typeRequest = 0
+        if info[0].lower() == "fashion":
+            typeRequest = 0
+        elif info[0].lower() == "sports":
+            typeRequest = 1
+        elif info[0].lower() == "politics":
+            typeRequest = 2
+        else:
+            typeRequest = 3
+
+        info[2] = info[2]+" 00:00:00"
+        date_time = datetime.strptime(info[2], '%y-%m-%d %H:%M:%S')
+        timestamp = date_time.timestamp()
+        time = Timestamp(seconds=int(timestamp))
+
+        requestedArticle = Message_pb2.ArticleRequest(type=typeRequest, author=info[1], time_rec=time)
+        request = Message_pb2.GetArticlesRequest(uuid = unique_id, typeOfRequest = "getArticle", article=requestedArticle)
+
+        context = zmq.Context()
+        socket = context.socket(zmq.REQ)
+        address = server[1] + ":" + str(server[2])
+        socket.connect("tcp://" + address)
+        
+        socket.send(request.SerializeToString())
+        message = socket.recv()
+        response = Message_pb2.GetArticlesResponse()
+        response.ParseFromString(message)
+        cnt =1
+        for article in response.article:
+            if article.type == 0:
+                type = "FASHION"
+            elif article.type == 1:
+                type = "SPORTS"
+            elif article.type  == 2:
+                type = "POLITICS"
+
+            date = datetime.fromtimestamp(article.time_rec.seconds)
+
+            print(str(cnt) + ") " + "\n" + type + "\n" + article.author + "\n" + str(date) + "\n" +  article.content)
+            cnt+=1
+        
 
 def runRegistryServer(arg):
     context = zmq.Context()
     socket = context.socket(zmq.REQ)
-    socket.connect("tcp://localhost:5555")
+    socket.connect("tcp://localhost:5556")
     request = Message_pb2.RegisterRequest(typeOfRequest="getServerList", name=arg[0], address=Message_pb2.Address(IP=arg[1], port=int(arg[2])))
     serialized_msg = request.SerializeToString()
     socket.send(serialized_msg)
@@ -97,8 +148,7 @@ def runServer(client, choice):
     elif choice == 3:
         leaveServer(client, server)
     elif choice == 4:
-        pass
-        # getArticles(client, server)
+        getArticles(client, server)
     elif choice == 5:
         publishArticles(client, server)
 

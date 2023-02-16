@@ -49,18 +49,20 @@ class ArticleRequest(_message.Message):
     def __init__(self, type: _Optional[_Union[ArticleRequest.Type, str]] = ..., author: _Optional[str] = ..., time_rec: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class GetArticlesRequest(_message.Message):
-    __slots__ = ["ArticleResquest", "uuid"]
-    ARTICLERESQUEST_FIELD_NUMBER: _ClassVar[int]
-    ArticleResquest: ArticleFormat
+    __slots__ = ["article", "typeOfRequest", "uuid"]
+    ARTICLE_FIELD_NUMBER: _ClassVar[int]
+    TYPEOFREQUEST_FIELD_NUMBER: _ClassVar[int]
     UUID_FIELD_NUMBER: _ClassVar[int]
+    article: ArticleRequest
+    typeOfRequest: str
     uuid: str
-    def __init__(self, uuid: _Optional[str] = ..., ArticleResquest: _Optional[_Union[ArticleFormat, _Mapping]] = ...) -> None: ...
+    def __init__(self, typeOfRequest: _Optional[str] = ..., uuid: _Optional[str] = ..., article: _Optional[_Union[ArticleRequest, _Mapping]] = ...) -> None: ...
 
 class GetArticlesResponse(_message.Message):
     __slots__ = ["article"]
     ARTICLE_FIELD_NUMBER: _ClassVar[int]
-    article: ArticleFormat
-    def __init__(self, article: _Optional[_Union[ArticleFormat, _Mapping]] = ...) -> None: ...
+    article: _containers.RepeatedCompositeFieldContainer[ArticleFormat]
+    def __init__(self, article: _Optional[_Iterable[_Union[ArticleFormat, _Mapping]]] = ...) -> None: ...
 
 class GetServerListRequest(_message.Message):
     __slots__ = ["address", "name", "typeOfRequest"]
@@ -118,7 +120,7 @@ class PublishArticlesRequest(_message.Message):
     article: ArticleFormat
     typeOfRequest: str
     uuid: str
-    def __init__(self, uuid: _Optional[str] = ..., article: _Optional[_Union[ArticleFormat, _Mapping]] = ..., typeOfRequest: _Optional[str] = ...) -> None: ...
+    def __init__(self, typeOfRequest: _Optional[str] = ..., uuid: _Optional[str] = ..., article: _Optional[_Union[ArticleFormat, _Mapping]] = ...) -> None: ...
 
 class PublishArticlesResponse(_message.Message):
     __slots__ = ["status"]

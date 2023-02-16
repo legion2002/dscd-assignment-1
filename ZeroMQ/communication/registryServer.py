@@ -5,12 +5,12 @@ import time
 import zmq
 import Message_pb2
 
-MAX_SERVER = 2
+MAX_SERVER = 4
 Servers = {}
 
 context = zmq.Context()
 socket = context.socket(zmq.REP)
-socket.bind("tcp://*:5555")
+socket.bind("tcp://*:5556")
 
 
 def addServers(name, IP, port):

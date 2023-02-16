@@ -8,7 +8,7 @@ import time
 import zmq
 import datetime
 
-MAX_CLIENTS = 2
+MAX_CLIENTS = 4
 CLIENTELE = {}
 ARTICLES = []
 
@@ -71,11 +71,33 @@ def PublishArticle(request):
 
     return Message_pb2.PublishArticlesResponse(status="FAIL")
 
+def GetArticles(request):
+    articlesRequested = []
+    for client in CLIENTELE.keys():
+        if CLIENTELE[client][2] == request.uuid:
+            print("ARTICLE REQUEST FROM " + request.uuid)
+            for articles in ARTICLES:
+                timestamp = articles.time_rec
+                if(request.article.time_rec.seconds <= timestamp.seconds):
+                    # Comparing author
+                    if(request.article.author != "" and request.article.author == articles.author):
+                        if(request.article.type == articles.type):
+                            articlesRequested.append(articles)
+                        elif(request.article.type == 3):
+                            articlesRequested.append(articles)
+                    # Comparing type becaiuse author was empty
+                    else:
+                        if(request.article.author == "" and request.article.type == articles.type):
+                            articlesRequested.append(articles)
+    response = Message_pb2.GetArticlesResponse()
+    response.article.extend(articlesRequested)
+    return response
+
 
 def connectToRegistry(arg):
     context = zmq.Context()
     socket = context.socket(zmq.REQ)
-    socket.connect("tcp://localhost:5555")
+    socket.connect("tcp://localhost:5556")
     request = Message_pb2.RegisterRequest(typeOfRequest = "register", name=arg[0], address=Message_pb2.Address(IP=arg[1], port=int(arg[2])))
     serialized_msg = request.SerializeToString()
     socket.send(serialized_msg)
@@ -90,18 +112,17 @@ def connectToRegistry(arg):
 def connectToClient(arg):
     context = zmq.Context()
     socket = context.socket(zmq.REP)
-    print("tcp://*:" + str(arg[2]))
     socket.bind("tcp://*:" + str(arg[2]))
     while True:
         message = socket.recv()
         joinServerRequest = Message_pb2.JoinServerRequest()
         leaveServerRequest = Message_pb2.LeaveServerRequest()
-        # getArticlesRequest = Message_pb2.GetArticlesRequest()
+        getArticlesRequest = Message_pb2.GetArticlesRequest()
         publishArticlesRequest = Message_pb2.PublishArticlesRequest()
 
         joinServerRequest.ParseFromString(message)
         leaveServerRequest.ParseFromString(message)
-        # getArticlesRequest.ParseFromString(message)
+        getArticlesRequest.ParseFromString(message)
         publishArticlesRequest.ParseFromString(message)
 
         if(joinServerRequest.typeOfRequest == "joinServer"):
@@ -114,11 +135,11 @@ def connectToClient(arg):
             time.sleep(1)
             result = result.SerializeToString()
             socket.send(result)
-        # elif(getArticlesRequest.typeOfRequest == "getArticle"):
-        #     result = GetArticles(getArticlesRequest)
-        #     time.sleep(1)
-        #     result = result.SerializeToString()
-        #     socket.send(result)
+        elif(getArticlesRequest.typeOfRequest == "getArticle"):
+            result = GetArticles(getArticlesRequest)
+            time.sleep(1)
+            result = result.SerializeToString()
+            socket.send(result)
         elif(publishArticlesRequest.typeOfRequest == "publishArticle"):
             result = PublishArticle(publishArticlesRequest)
             time.sleep(1)

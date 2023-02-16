@@ -3,6 +3,10 @@ from __future__ import print_function
 import sys
 sys.path.insert(1, '../proto_files')
 
+from concurrent import futures
+from google.protobuf.timestamp_pb2 import Timestamp
+from datetime import datetime
+
 import CommWithRegistryServer_pb2_grpc
 import CommWithRegistryServer_pb2
 import CommWithServer_pb2_grpc
@@ -11,11 +15,6 @@ import Article_pb2
 import grpc
 import logging
 import uuid
-
-from concurrent import futures
-from google.protobuf.timestamp_pb2 import Timestamp
-from datetime import datetime
-
 
 unique_id = str(uuid.uuid1())
 

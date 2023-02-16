@@ -1,4 +1,5 @@
 syntax = "proto3";
+
 import "google/protobuf/timestamp.proto";
 
 message Address{
@@ -11,38 +12,30 @@ message ServerAddress{
     Address address = 2;
 }
 
-message Fashion{
-}
-
-message Politics{
-}
-
-message Sports{
-}
-
 message ArticleFormat{
     enum Type{
         FASHION = 0;
         SPORTS = 1;
         POLITICS = 2;
     }
+
     Type type = 1;
     string author = 2;
     google.protobuf.Timestamp time_rec = 3;
     string content = 4;
-
 }
 
 message ArticleRequest{
-
-    oneof type{
-        Fashion fashion = 1;
-        Politics politics = 2;
-        Sports sports = 3;
+    enum Type{
+        FASHION = 0;
+        SPORTS = 1;
+        POLITICS = 2;
+        ANYTHING = 3;
     }
 
-    string author = 4;
-    google.protobuf.Timestamp time_rec = 5;
+    Type type = 1;
+    string author = 2;
+    google.protobuf.Timestamp time_rec = 3;
 }
 
 message GetServerListRequest{
@@ -64,10 +57,6 @@ message RegisterRequest{
 message RegisterResponse{
     string status = 1;
 }
-
-
-
-
 
 message JoinServerRequest{
     string uuid = 1;

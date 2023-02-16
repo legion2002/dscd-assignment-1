@@ -6,18 +6,19 @@ sys.path.insert(1, '../proto_files')
 from concurrent import futures
 from google.protobuf.timestamp_pb2 import Timestamp
 
+import grpc
+import logging
+import datetime
 import CommWithRegistryServer_pb2_grpc
 import CommWithRegistryServer_pb2
 import Article_pb2
 import CommWithServer_pb2_grpc
 import CommWithServer_pb2
-import grpc
-import logging
-import datetime
 
 MAX_CLIENTS = 2
 CLIENTELE = {}
 ARTICLES = []
+
 
 def addClient(uuid, name, IP, port):
     if name in CLIENTELE.keys():
@@ -55,6 +56,8 @@ def registerServer(stub, request):
 
 
 class CommWithServerServicer(CommWithServer_pb2_grpc.CommWithServerServicer):
+
+
     def JoinServer(self, request, context):
         print("JOIN REQUEST FROM " + request.uuid)
         result = addClient(request.uuid, request.name, request.address.IP, request.address.port)
@@ -63,6 +66,7 @@ class CommWithServerServicer(CommWithServer_pb2_grpc.CommWithServerServicer):
         else:
             return CommWithServer_pb2.JoinServerResponse(status="FAIL")
 
+
     def LeaveServer(self, request, context):
         print("LEAVE REQUEST FROM " + request.uuid)
         result = removeClient(request.uuid)
@@ -70,6 +74,7 @@ class CommWithServerServicer(CommWithServer_pb2_grpc.CommWithServerServicer):
             return CommWithServer_pb2.JoinServerResponse(status="SUCCESS")
         else:
             return CommWithServer_pb2.JoinServerResponse(status="FAIL")
+
 
     def PublishArticles(self, request, context):
         for client in CLIENTELE.keys():
@@ -82,6 +87,7 @@ class CommWithServerServicer(CommWithServer_pb2_grpc.CommWithServerServicer):
                 return CommWithServer_pb2.JoinServerResponse(status="SUCCESS")
 
         return CommWithServer_pb2.JoinServerResponse(status="FAIL")
+
 
     def GetArticles(self, request, context):
         for client in CLIENTELE.keys():

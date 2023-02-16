@@ -1,8 +1,8 @@
-import time
-import zmq
-
 import sys
 sys.path.insert(1, '../proto')
+
+import time
+import zmq
 import Message_pb2
 
 MAX_SERVER = 2
@@ -11,6 +11,7 @@ Servers = {}
 context = zmq.Context()
 socket = context.socket(zmq.REP)
 socket.bind("tcp://*:5555")
+
 
 def addServers(name, IP, port):
 
@@ -29,6 +30,7 @@ def addServers(name, IP, port):
     else:
         return 1
 
+
 def Register(request : Message_pb2.RegisterRequest):
         print("JOIN REQUEST FROM " + request.address.IP + ":" + str(request.address.port))
         result = addServers(request.name, request.address.IP, request.address.port)
@@ -43,6 +45,7 @@ def Register(request : Message_pb2.RegisterRequest):
             serialized_msg = status.SerializeToString()
             socket.send(serialized_msg)
             time.sleep(1)
+
 
 def GetServerList(request : Message_pb2.GetServerListRequest):
         print("SERVER LIST REQUEST FROM " + request.address.IP + ":" + str(request.address.port))
@@ -70,6 +73,7 @@ def serve():
         elif(serverListRequest.typeOfRequest == "getServerList"):
             GetServerList(serverListRequest)
             time.sleep(1)
+
 
 if __name__ == '__main__':
     serve()

@@ -13,6 +13,7 @@ message ArticleFormat{
         SPORTS = 1;
         POLITICS = 2;
     }
+
     Type type = 1;
     string author = 2;
     google.protobuf.Timestamp time_rec = 3;
@@ -26,6 +27,7 @@ message ArticleRequest{
         POLITICS = 2;
         ANYTHING = 3;
     }
+
     Type type = 1;
     string author = 2;
     google.protobuf.Timestamp time_rec = 3;

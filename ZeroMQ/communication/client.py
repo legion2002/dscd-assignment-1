@@ -1,16 +1,15 @@
-import time
-import zmq
-
 import sys
 sys.path.insert(1, '../proto')
-import Message_pb2
 
 from google.protobuf.timestamp_pb2 import Timestamp
 import datetime
-
 import uuid
+import Message_pb2
+import time
+import zmq
 
 unique_id = str(uuid.uuid1())
+
 
 def joinServer(client, server):
     context = zmq.Context()
@@ -18,18 +17,19 @@ def joinServer(client, server):
     address = server[1] + ":" + str(server[2])
     print(address)
     socket.connect("tcp://" + address)
-    socket.send(Message_pb2.JoinServerRequest(uuid = unique_id, name=client[0], address=Message_pb2.Address(IP=client[1], port=int(client[2]))).SerializeToString())
+    socket.send(Message_pb2.JoinServerRequest(uuid = unique_id, name=client[0], address=Message_pb2.Address(IP=client[1], port=int(client[2])), typeOfRequest="joinServer").SerializeToString())
     message = socket.recv()
     status = Message_pb2.JoinServerResponse()
     status.ParseFromString(message)
     print(status)
+
 
 def leaveServer(client, server):
     context = zmq.Context()
     socket = context.socket(zmq.REQ)
     address = server[1] + ":" + str(server[2])
     socket.connect("tcp://" + address)
-    socket.send(Message_pb2.LeaveServerRequest(uuid = unique_id).SerializeToString())
+    socket.send(Message_pb2.LeaveServerRequest(uuid = unique_id, typeOfRequest="leaveServer").SerializeToString())
     message = socket.recv()
     status = Message_pb2.JoinServerResponse()
     status.ParseFromString(message)
@@ -49,6 +49,7 @@ def runRegistryServer(arg):
     for details in status.serverDetails:
         print(details.name + " - " + details.address.IP + ":" + str(details.address.port))
 
+
 def runServer(client, choice):
     print("Enter Server Information")
     info = input()
@@ -67,6 +68,7 @@ def runServer(client, choice):
     elif choice == 5:
         pass
         # publishArticles(client, server)
+
 
 if __name__ == '__main__':
     arg = sys.argv[1:]

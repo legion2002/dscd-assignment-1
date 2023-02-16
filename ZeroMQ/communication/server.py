@@ -1,16 +1,17 @@
-import time
-import zmq
-
 import sys
 sys.path.insert(1, '../proto')
-import Message_pb2
 
 from google.protobuf.timestamp_pb2 import Timestamp
+
+import Message_pb2
+import time
+import zmq
 import datetime
 
 MAX_CLIENTS = 2
 CLIENTELE = {}
 ARTICLES = []
+
 
 def addClient(uuid, name, IP, port):
     if name in CLIENTELE.keys():
@@ -30,6 +31,7 @@ def addClient(uuid, name, IP, port):
     else:
         return 1
 
+
 def removeClient(uuid):
     for client in CLIENTELE.keys():
         if CLIENTELE[client][2] == uuid:
@@ -38,6 +40,7 @@ def removeClient(uuid):
     
     return 1
 
+
 def JoinServer(request):
         print("JOIN REQUEST FROM " + request.uuid)
         result = addClient(request.uuid, request.name, request.address.IP, request.address.port)
@@ -45,6 +48,7 @@ def JoinServer(request):
             return Message_pb2.JoinServerResponse(status="SUCCESS")
         else:
             return Message_pb2.JoinServerResponse(status="FAIL")
+
 
 def LeaveServer(request):
     print("LEAVE REQUEST FROM " + request.uuid)
@@ -69,6 +73,7 @@ def connectToRegistry(arg):
     if "SUCCESS" in status.status:
         return 0
 
+
 def connectToClient(arg):
     context = zmq.Context()
     socket = context.socket(zmq.REP)
@@ -86,8 +91,10 @@ def connectToClient(arg):
             result = result.SerializeToString()
             socket.send(result)
         elif(leaveServerRequest.typeOfRequest == "leaveServer"):
-            LeaveServer(leaveServerRequest)
+            result = LeaveServer(leaveServerRequest)
             time.sleep(1)
+            result = result.SerializeToString()
+            socket.send(result)
 
 
 if __name__ == '__main__':
@@ -95,3 +102,4 @@ if __name__ == '__main__':
     status = connectToRegistry(arg)
     if status == 0:
         connectToClient(arg)
+        

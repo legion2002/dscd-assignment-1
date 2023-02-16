@@ -1,16 +1,18 @@
 import sys
 sys.path.insert(1, '../proto_files')
 
+from concurrent import futures
+
+import logging
+import grpc
 import CommWithRegistryServer_pb2_grpc
 import CommWithRegistryServer_pb2
 import Article_pb2
 
-import grpc
-from concurrent import futures
-import logging
 
 MAX_SERVER = 2
 Servers = {}
+
 
 def addServers(name, IP, port):
 
@@ -31,6 +33,8 @@ def addServers(name, IP, port):
 
 
 class CommWithRegistryServerServicer(CommWithRegistryServer_pb2_grpc.CommWithRegistryServerServicer):
+
+
     def Register(self, request, context):
         print("JOIN REQUEST FROM " + request.address.IP + ":" + str(request.address.port))
         result = addServers(request.name, request.address.IP, request.address.port)
@@ -39,6 +43,7 @@ class CommWithRegistryServerServicer(CommWithRegistryServer_pb2_grpc.CommWithReg
         else:
             return CommWithRegistryServer_pb2.RegisterResponse(status="FAIL")
 
+
     def GetServerList(self, request, context):
         print("SERVER LIST REQUEST FROM " + request.address.IP + ":" + str(request.address.port))
         for server in Servers.keys():
@@ -46,12 +51,14 @@ class CommWithRegistryServerServicer(CommWithRegistryServer_pb2_grpc.CommWithReg
             port = Servers[server][1]
             yield CommWithRegistryServer_pb2.GetServerListResponse(name=server, address= Article_pb2.Address(IP=IP, port=port))
 
+
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     CommWithRegistryServer_pb2_grpc.add_CommWithRegistryServerServicer_to_server(CommWithRegistryServerServicer(), server)
     server.add_insecure_port('[::]:8000')
     server.start()
     server.wait_for_termination()
+
 
 if __name__ == '__main__':
     logging.basicConfig()

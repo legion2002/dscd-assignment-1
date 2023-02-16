@@ -33,22 +33,20 @@ class ArticleFormat(_message.Message):
     def __init__(self, type: _Optional[_Union[ArticleFormat.Type, str]] = ..., author: _Optional[str] = ..., time_rec: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., content: _Optional[str] = ...) -> None: ...
 
 class ArticleRequest(_message.Message):
-    __slots__ = ["author", "fashion", "politics", "sports", "time_rec"]
+    __slots__ = ["author", "time_rec", "type"]
+    class Type(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+        __slots__ = []
+    ANYTHING: ArticleRequest.Type
     AUTHOR_FIELD_NUMBER: _ClassVar[int]
-    FASHION_FIELD_NUMBER: _ClassVar[int]
-    POLITICS_FIELD_NUMBER: _ClassVar[int]
-    SPORTS_FIELD_NUMBER: _ClassVar[int]
+    FASHION: ArticleRequest.Type
+    POLITICS: ArticleRequest.Type
+    SPORTS: ArticleRequest.Type
     TIME_REC_FIELD_NUMBER: _ClassVar[int]
+    TYPE_FIELD_NUMBER: _ClassVar[int]
     author: str
-    fashion: Fashion
-    politics: Politics
-    sports: Sports
     time_rec: _timestamp_pb2.Timestamp
-    def __init__(self, fashion: _Optional[_Union[Fashion, _Mapping]] = ..., politics: _Optional[_Union[Politics, _Mapping]] = ..., sports: _Optional[_Union[Sports, _Mapping]] = ..., author: _Optional[str] = ..., time_rec: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
-
-class Fashion(_message.Message):
-    __slots__ = []
-    def __init__(self) -> None: ...
+    type: ArticleRequest.Type
+    def __init__(self, type: _Optional[_Union[ArticleRequest.Type, str]] = ..., author: _Optional[str] = ..., time_rec: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class GetArticlesRequest(_message.Message):
     __slots__ = ["ArticleResquest", "uuid"]
@@ -112,10 +110,6 @@ class LeaveServerResponse(_message.Message):
     status: str
     def __init__(self, status: _Optional[str] = ...) -> None: ...
 
-class Politics(_message.Message):
-    __slots__ = []
-    def __init__(self) -> None: ...
-
 class PublishArticlesRequest(_message.Message):
     __slots__ = ["article", "uuid"]
     ARTICLE_FIELD_NUMBER: _ClassVar[int]
@@ -153,7 +147,3 @@ class ServerAddress(_message.Message):
     address: Address
     name: str
     def __init__(self, name: _Optional[str] = ..., address: _Optional[_Union[Address, _Mapping]] = ...) -> None: ...
-
-class Sports(_message.Message):
-    __slots__ = []
-    def __init__(self) -> None: ...

@@ -59,6 +59,19 @@ def LeaveServer(request):
         return Message_pb2.JoinServerResponse(status="FAIL")
 
 
+def PublishArticle(request):
+    for client in CLIENTELE.keys():
+        if CLIENTELE[client][2] == request.uuid:
+            print("ARTICLE PUBLISH FROM " + request.uuid)
+            ct = datetime.datetime.now()
+            timestamp = ct.timestamp()
+            time = Timestamp(seconds=int(timestamp))
+            ARTICLES.append(Message_pb2.ArticleFormat(type=request.article.type, author=request.article.author, time_rec=time, content=request.article.content))
+            return Message_pb2.PublishArticlesResponse(status="SUCCESS")
+
+    return Message_pb2.PublishArticlesResponse(status="FAIL")
+
+
 def connectToRegistry(arg):
     context = zmq.Context()
     socket = context.socket(zmq.REQ)
@@ -83,8 +96,10 @@ def connectToClient(arg):
         message = socket.recv()
         joinServerRequest = Message_pb2.JoinServerRequest()
         leaveServerRequest = Message_pb2.LeaveServerRequest()
+        publishArticlesRequest = Message_pb2.PublishArticlesRequest()
         joinServerRequest.ParseFromString(message)
         leaveServerRequest.ParseFromString(message)
+        publishArticlesRequest.ParseFromString(message)
         if(joinServerRequest.typeOfRequest == "joinServer"):
             result = JoinServer(joinServerRequest)
             time.sleep(1)
@@ -92,6 +107,11 @@ def connectToClient(arg):
             socket.send(result)
         elif(leaveServerRequest.typeOfRequest == "leaveServer"):
             result = LeaveServer(leaveServerRequest)
+            time.sleep(1)
+            result = result.SerializeToString()
+            socket.send(result)
+        elif(publishArticlesRequest.typeOfRequest == "publishArticle"):
+            result = PublishArticle(publishArticlesRequest)
             time.sleep(1)
             result = result.SerializeToString()
             socket.send(result)

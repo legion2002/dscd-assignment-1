@@ -111,12 +111,14 @@ class LeaveServerResponse(_message.Message):
     def __init__(self, status: _Optional[str] = ...) -> None: ...
 
 class PublishArticlesRequest(_message.Message):
-    __slots__ = ["article", "uuid"]
+    __slots__ = ["article", "typeOfRequest", "uuid"]
     ARTICLE_FIELD_NUMBER: _ClassVar[int]
+    TYPEOFREQUEST_FIELD_NUMBER: _ClassVar[int]
     UUID_FIELD_NUMBER: _ClassVar[int]
     article: ArticleFormat
+    typeOfRequest: str
     uuid: str
-    def __init__(self, uuid: _Optional[str] = ..., article: _Optional[_Union[ArticleFormat, _Mapping]] = ...) -> None: ...
+    def __init__(self, uuid: _Optional[str] = ..., article: _Optional[_Union[ArticleFormat, _Mapping]] = ..., typeOfRequest: _Optional[str] = ...) -> None: ...
 
 class PublishArticlesResponse(_message.Message):
     __slots__ = ["status"]

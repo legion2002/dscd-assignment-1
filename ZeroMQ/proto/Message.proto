@@ -78,6 +78,7 @@ message GetArticlesRequest{
 message PublishArticlesRequest{
     string uuid = 1;
     ArticleFormat article = 2;
+    string typeOfRequest = 3;
 }
 
 message JoinServerResponse{

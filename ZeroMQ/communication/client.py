@@ -17,7 +17,7 @@ def joinServer(client, server):
     address = server[1] + ":" + str(server[2])
     print(address)
     socket.connect("tcp://" + address)
-    socket.send(Message_pb2.JoinServerRequest(uuid = unique_id, name=client[0], address=Message_pb2.Address(IP=client[1], port=int(client[2])), typeOfRequest="joinServer").SerializeToString())
+    socket.send(Message_pb2.JoinServerRequest(uuid=unique_id, name=client[0], address=Message_pb2.Address(IP=client[1], port=int(client[2])), typeOfRequest="joinServer").SerializeToString())
     message = socket.recv()
     status = Message_pb2.JoinServerResponse()
     status.ParseFromString(message)
@@ -29,11 +29,46 @@ def leaveServer(client, server):
     socket = context.socket(zmq.REQ)
     address = server[1] + ":" + str(server[2])
     socket.connect("tcp://" + address)
-    socket.send(Message_pb2.LeaveServerRequest(uuid = unique_id, typeOfRequest="leaveServer").SerializeToString())
+    socket.send(Message_pb2.LeaveServerRequest(uuid=unique_id, typeOfRequest="leaveServer").SerializeToString())
     message = socket.recv()
     status = Message_pb2.JoinServerResponse()
     status.ParseFromString(message)
     print(status)
+
+
+def publishArticles(client, server):
+    print("Enter Details for Publishing Article")
+    print("Type of Article")
+    typeForArticle = input()
+    print("Author of Article")
+    author = input()
+    print("Content of Article")
+    content = input()
+    if len(content) > 200:
+        print("Can not publish. Content greater than 200 in size")
+    else:
+        typeRequest = -1
+        if typeForArticle.lower() == "fashion":
+            typeRequest = 0
+        elif typeForArticle.lower() == "sports":
+            typeRequest = 1
+        elif typeForArticle.lower() == "politics":
+            typeRequest = 2
+
+        if typeRequest != -1:
+            context = zmq.Context()
+            socket = context.socket(zmq.REQ)
+            address = server[1] + ":" + str(server[2])
+            print(address)
+            socket.connect("tcp://" + address)
+            requestedArticle = Message_pb2.ArticleFormat(type=typeRequest, author=author, content=content)
+            socket.send(Message_pb2.PublishArticlesRequest(uuid=unique_id,  article=requestedArticle, typeOfRequest="publishArticle").SerializeToString())
+            message = socket.recv()
+            status = Message_pb2.PublishArticlesResponse()
+            status.ParseFromString(message)
+            print(status)
+        else:
+            print("Can not publish. Wrong Type") 
 
 
 def runRegistryServer(arg):
@@ -66,8 +101,7 @@ def runServer(client, choice):
         pass
         # getArticles(client, server)
     elif choice == 5:
-        pass
-        # publishArticles(client, server)
+        publishArticles(client, server)
 
 
 if __name__ == '__main__':

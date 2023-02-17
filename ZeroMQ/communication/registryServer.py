@@ -32,31 +32,31 @@ def addServers(name, IP, port):
 
 
 def Register(request : Message_pb2.RegisterRequest):
-        print("JOIN REQUEST FROM " + request.address.IP + ":" + str(request.address.port))
-        result = addServers(request.name, request.address.IP, request.address.port)
-        if result == 0:
-            status = Message_pb2.RegisterResponse(status="SUCCESS")
-            serialized_msg = status.SerializeToString()
-            socket.send(serialized_msg)
-            time.sleep(1)
-            
-        else:
-            status = Message_pb2.RegisterResponse(status="FAIL")
-            serialized_msg = status.SerializeToString()
-            socket.send(serialized_msg)
-            time.sleep(1)
+    print("JOIN REQUEST FROM " + request.address.IP + ":" + str(request.address.port))
+    result = addServers(request.name, request.address.IP, request.address.port)
+    if result == 0:
+        status = Message_pb2.RegisterResponse(status="SUCCESS")
+        serialized_msg = status.SerializeToString()
+        socket.send(serialized_msg)
+        time.sleep(1)
+        
+    else:
+        status = Message_pb2.RegisterResponse(status="FAIL")
+        serialized_msg = status.SerializeToString()
+        socket.send(serialized_msg)
+        time.sleep(1)
 
 
 def GetServerList(request : Message_pb2.GetServerListRequest):
-        print("SERVER LIST REQUEST FROM " + request.address.IP + ":" + str(request.address.port))
-        serverList = []
-        for server in Servers.keys():
-            IP = Servers[server][0]
-            port = Servers[server][1]
-            serverList.append(Message_pb2.ServerAddress(name=server, address= Message_pb2.Address(IP=IP, port=port)))
-        response = Message_pb2.GetServerListResponse()
-        response.serverDetails.extend(serverList)
-        socket.send(response.SerializeToString())
+    print("SERVER LIST REQUEST FROM " + request.address.IP + ":" + str(request.address.port))
+    serverList = []
+    for server in Servers.keys():
+        IP = Servers[server][0]
+        port = Servers[server][1]
+        serverList.append(Message_pb2.ServerAddress(name=server, address= Message_pb2.Address(IP=IP, port=port)))
+    response = Message_pb2.GetServerListResponse()
+    response.serverDetails.extend(serverList)
+    socket.send(response.SerializeToString())
 
 
 def serve():

@@ -96,10 +96,14 @@ def connectToClient(arg):
         message = socket.recv()
         joinServerRequest = Message_pb2.JoinServerRequest()
         leaveServerRequest = Message_pb2.LeaveServerRequest()
+        # getArticlesRequest = Message_pb2.GetArticlesRequest()
         publishArticlesRequest = Message_pb2.PublishArticlesRequest()
+
         joinServerRequest.ParseFromString(message)
         leaveServerRequest.ParseFromString(message)
+        # getArticlesRequest.ParseFromString(message)
         publishArticlesRequest.ParseFromString(message)
+
         if(joinServerRequest.typeOfRequest == "joinServer"):
             result = JoinServer(joinServerRequest)
             time.sleep(1)
@@ -110,6 +114,11 @@ def connectToClient(arg):
             time.sleep(1)
             result = result.SerializeToString()
             socket.send(result)
+        # elif(getArticlesRequest.typeOfRequest == "getArticle"):
+        #     result = GetArticles(getArticlesRequest)
+        #     time.sleep(1)
+        #     result = result.SerializeToString()
+        #     socket.send(result)
         elif(publishArticlesRequest.typeOfRequest == "publishArticle"):
             result = PublishArticle(publishArticlesRequest)
             time.sleep(1)

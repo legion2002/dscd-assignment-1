@@ -73,6 +73,7 @@ message LeaveServerRequest{
 message GetArticlesRequest{
     string uuid = 1;
     ArticleFormat ArticleResquest = 2;
+    string typeOfRequest = 3;
 }
 
 message PublishArticlesRequest{

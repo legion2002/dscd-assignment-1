@@ -1,1 +1,1 @@
-# Tanishk is the best
+# DSCD Assignment 1

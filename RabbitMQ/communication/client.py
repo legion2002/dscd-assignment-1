@@ -61,11 +61,11 @@ def joinServer(client, server):
             auto_ack=True)
 
     request = Message_pb2.JoinServerRequest(uuid=unique_id, name=client[0], address=Message_pb2.Address(IP=client[1], port=int(client[2])), typeOfRequest="joinServer")
-    serialized_msg = request.SerializeToString()
+    data = Message_pb2.StandardFormat(typeOfRequest="joinServer", join=request)
+    serialized_msg = data.SerializeToString()
     global corr_id
     corr_id = str(uuid.uuid4())
 
-    print("Sending to server queue: " + str(server[2]) + "_server_queue" )
     channel.basic_publish(
         exchange='',
         routing_key=str(server[2]) + "_server_queue",
@@ -84,10 +84,10 @@ def leaveServer(client, server):
             auto_ack=True)
 
     request = Message_pb2.LeaveServerRequest(uuid=unique_id, typeOfRequest="leaveServer")
-    serialized_msg = request.SerializeToString()
+    data = Message_pb2.StandardFormat(typeOfRequest="leaveServer", leave=request)
+    serialized_msg = data.SerializeToString()
     global corr_id
     corr_id = str(uuid.uuid4())
-    print("Sending to server queue: " + str(server[2]) + "_server_queue" )
     channel.basic_publish(
         exchange='',
         routing_key=str(server[2]) + "_server_queue",
@@ -128,10 +128,10 @@ def publishArticles(client, server):
                     auto_ack=True)
 
             request = Message_pb2.PublishArticlesRequest(uuid=unique_id,  article=Message_pb2.ArticleFormat(type=typeRequest, author=author, content=content), typeOfRequest="publishArticle")
-            serialized_msg = request.SerializeToString()
+            data = Message_pb2.StandardFormat(typeOfRequest="publishArticle", publish=request)
+            serialized_msg = data.SerializeToString()
             global corr_id
             corr_id = str(uuid.uuid4())
-            print("Sending to server queue: " + str(server[2]) + "_server_queue" )
             channel.basic_publish(
                 exchange='',
                 routing_key=str(server[2]) + "_server_queue",
@@ -181,10 +181,10 @@ def getArticles(client, server):
                 auto_ack=True)
 
 
-        serialized_msg = request.SerializeToString()
+        data = Message_pb2.StandardFormat(typeOfRequest="getArticle", getArticles=request)
+        serialized_msg = data.SerializeToString()
         global corr_id
         corr_id = str(uuid.uuid4())
-        print("Sending to server queue: " + str(server[2]) + "_server_queue" )
         channel.basic_publish(
             exchange='',
             routing_key=str(server[2]) + "_server_queue",

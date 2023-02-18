@@ -132,26 +132,17 @@ def connectToRegistry(arg):
     return returnFlag
 
 def client_callback(ch, method, properties, body):
-    joinServerRequest = Message_pb2.JoinServerRequest()
-    leaveServerRequest = Message_pb2.LeaveServerRequest()
-    getArticlesRequest = Message_pb2.GetArticlesRequest()
-    publishArticlesRequest = Message_pb2.PublishArticlesRequest()
+    request = Message_pb2.StandardFormat()
+    request.ParseFromString(body)
 
-    getArticlesRequest.ParseFromString(body)
-    joinServerRequest.ParseFromString(body)
-    leaveServerRequest.ParseFromString(body)
-    publishArticlesRequest.ParseFromString(body)
-
-
-
-    if(joinServerRequest.typeOfRequest == "joinServer"):
-        result = JoinServer(joinServerRequest).SerializeToString()
-    elif(leaveServerRequest.typeOfRequest == "leaveServer"):
-        result = LeaveServer(leaveServerRequest).SerializeToString()
-    elif(getArticlesRequest.typeOfRequest == "getArticle"):
-        result = GetArticles(getArticlesRequest).SerializeToString()
-    elif(publishArticlesRequest.typeOfRequest == "publishArticle"):
-        result = PublishArticle(publishArticlesRequest).SerializeToString()
+    if(request.typeOfRequest == "joinServer"):
+        result = JoinServer(request.join).SerializeToString()
+    elif(request.typeOfRequest == "leaveServer"):
+        result = LeaveServer(request.leave).SerializeToString()
+    elif(request.typeOfRequest == "getArticle"):
+        result = GetArticles(request.getArticles).SerializeToString()
+    elif(request.typeOfRequest == "publishArticle"):
+        result = PublishArticle(request.publish).SerializeToString()
 
     channel.basic_publish(exchange='', routing_key=properties.reply_to,
         properties=pika.BasicProperties(correlation_id = \
@@ -161,13 +152,10 @@ def client_callback(ch, method, properties, body):
 
     
 def connectToClient(arg):
-    print("Listening on: ", arg[2] + "_server_queue" )
     channel.queue_declare(arg[2] + "_server_queue")
     channel.basic_qos(prefetch_count=1)
     channel.basic_consume(queue=arg[2] + "_server_queue", on_message_callback=client_callback)
     channel.start_consuming()
-
-
 
 
 

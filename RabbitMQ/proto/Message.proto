@@ -8,6 +8,16 @@ message Address{
     string routing_key = 3;
 }
 
+message StandardFormat{
+    string typeOfRequest = 1;
+    oneof data{
+        JoinServerRequest join = 2;
+        LeaveServerRequest leave = 3;
+        GetArticlesRequest getArticles = 4;
+        PublishArticlesRequest publish = 5;
+    }
+}
+
 message ServerAddress{
     string name = 1;
     Address address = 2;
@@ -60,15 +70,17 @@ message RegisterResponse{
 }
 
 message JoinServerRequest{
-    string uuid = 1;
-    string name = 2;
-    Address address = 3;
-    string typeOfRequest = 4;
+    string typeOfRequest = 1;
+    string uuid = 2;
+    string name = 3;
+    Address address = 4;
+    
 }
 
 message LeaveServerRequest{
-    string uuid = 1;
-    string typeOfRequest = 2;
+    string typeOfRequest = 1;
+    string uuid = 2;
+    
 }
 
 message GetArticlesRequest{

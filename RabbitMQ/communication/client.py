@@ -10,29 +10,96 @@ import pika
 
 unique_id = str(uuid.uuid1())
 
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+channel = connection.channel()
+corr_id = 0
+
+def join_server_callback(ch, method, properties, body):
+    global corr_id
+    if properties.correlation_id == corr_id:
+        status = Message_pb2.JoinServerResponse()
+        status.ParseFromString(body)
+        print(status)
+
+def leave_server_callback(ch, method, properties, body):
+    global corr_id
+    if properties.correlation_id == corr_id:
+        status = Message_pb2.JoinServerResponse()
+        status.ParseFromString(body)
+        print(status)
+
+def publish_articles_callback(ch, method, properties, body):
+    global corr_id
+    if properties.correlation_id == corr_id:
+        status = Message_pb2.PublishArticlesResponse()
+        status.ParseFromString(body)
+        print(status)
+
+def get_articles_callback(ch, method, properties, body):
+    global corr_id
+    if properties.correlation_id == corr_id:
+        response = Message_pb2.GetArticlesResponse()
+        response.ParseFromString(body)
+        cnt =1
+        for article in response.article:
+            if article.type == 0:
+                type = "FASHION"
+            elif article.type == 1:
+                type = "SPORTS"
+            elif article.type  == 2:
+                type = "POLITICS"
+
+            date = datetime.fromtimestamp(article.time_rec.seconds)
+
+            print(str(cnt) + ") " + "\n" + type + "\n" + article.author + "\n" + str(date) + "\n" +  article.content)
+            cnt+=1
 
 def joinServer(client, server):
-    context = zmq.Context()
-    socket = context.socket(zmq.REQ)
-    address = server[1] + ":" + str(server[2])
-    socket.connect("tcp://" + address)
-    socket.send(Message_pb2.JoinServerRequest(uuid=unique_id, name=client[0], address=Message_pb2.Address(IP=client[1], port=int(client[2])), typeOfRequest="joinServer").SerializeToString())
-    message = socket.recv()
-    status = Message_pb2.JoinServerResponse()
-    status.ParseFromString(message)
-    print(status)
+    result = channel.queue_declare(queue='', exclusive=True)
+    callback_queue = result.method.queue
+    channel.basic_consume(queue=callback_queue, on_message_callback=join_server_callback,
+            auto_ack=True)
 
+    request = Message_pb2.JoinServerRequest(uuid=unique_id, name=client[0], address=Message_pb2.Address(IP=client[1], port=int(client[2])), typeOfRequest="joinServer")
+    serialized_msg = request.SerializeToString()
+    global corr_id
+    corr_id = str(uuid.uuid4())
+
+    print("Sending to server queue: " + str(server[2]) + "_server_queue" )
+    channel.basic_publish(
+        exchange='',
+        routing_key=str(server[2]) + "_server_queue",
+        properties=pika.BasicProperties(
+            reply_to=callback_queue,
+            correlation_id=corr_id,
+        ),
+        body=serialized_msg)
+    
+    connection.process_data_events(time_limit=None)
 
 def leaveServer(client, server):
-    context = zmq.Context()
-    socket = context.socket(zmq.REQ)
-    address = server[1] + ":" + str(server[2])
-    socket.connect("tcp://" + address)
-    socket.send(Message_pb2.LeaveServerRequest(uuid=unique_id, typeOfRequest="leaveServer").SerializeToString())
-    message = socket.recv()
-    status = Message_pb2.JoinServerResponse()
-    status.ParseFromString(message)
-    print(status)
+    result = channel.queue_declare(queue='', exclusive=True)
+    callback_queue = result.method.queue
+    channel.basic_consume(queue=callback_queue, on_message_callback=leave_server_callback,
+            auto_ack=True)
+
+    request = Message_pb2.LeaveServerRequest(uuid=unique_id, typeOfRequest="leaveServer")
+    serialized_msg = request.SerializeToString()
+    global corr_id
+    corr_id = str(uuid.uuid4())
+    print("Sending to server queue: " + str(server[2]) + "_server_queue" )
+    channel.basic_publish(
+        exchange='',
+        routing_key=str(server[2]) + "_server_queue",
+        properties=pika.BasicProperties(
+            reply_to=callback_queue,
+            correlation_id=corr_id,
+        ),
+        body=serialized_msg)
+    
+    connection.process_data_events(time_limit=None)
+
+
 
 
 def publishArticles(client, server):
@@ -55,15 +122,26 @@ def publishArticles(client, server):
             typeRequest = 2
 
         if typeRequest != -1:
-            context = zmq.Context()
-            socket = context.socket(zmq.REQ)
-            address = server[1] + ":" + str(server[2])
-            socket.connect("tcp://" + address)
-            socket.send(Message_pb2.PublishArticlesRequest(uuid=unique_id,  article=Message_pb2.ArticleFormat(type=typeRequest, author=author, content=content), typeOfRequest="publishArticle").SerializeToString())
-            message = socket.recv()
-            status = Message_pb2.PublishArticlesResponse()
-            status.ParseFromString(message)
-            print(status)
+            result = channel.queue_declare(queue='', exclusive=True)
+            callback_queue = result.method.queue
+            channel.basic_consume(queue=callback_queue, on_message_callback=publish_articles_callback,
+                    auto_ack=True)
+
+            request = Message_pb2.PublishArticlesRequest(uuid=unique_id,  article=Message_pb2.ArticleFormat(type=typeRequest, author=author, content=content), typeOfRequest="publishArticle")
+            serialized_msg = request.SerializeToString()
+            global corr_id
+            corr_id = str(uuid.uuid4())
+            print("Sending to server queue: " + str(server[2]) + "_server_queue" )
+            channel.basic_publish(
+                exchange='',
+                routing_key=str(server[2]) + "_server_queue",
+                properties=pika.BasicProperties(
+                    reply_to=callback_queue,
+                    correlation_id=corr_id,
+                ),
+                body=serialized_msg)
+            
+            connection.process_data_events(time_limit=None)
         else:
             print("Can not publish. Wrong Type") 
 
@@ -96,44 +174,59 @@ def getArticles(client, server):
 
         requestedArticle = Message_pb2.ArticleRequest(type=typeRequest, author=info[1], time_rec=time)
         request = Message_pb2.GetArticlesRequest(uuid = unique_id, typeOfRequest = "getArticle", article=requestedArticle)
-
-        context = zmq.Context()
-        socket = context.socket(zmq.REQ)
-        address = server[1] + ":" + str(server[2])
-        socket.connect("tcp://" + address)
         
-        socket.send(request.SerializeToString())
-        message = socket.recv()
-        response = Message_pb2.GetArticlesResponse()
-        response.ParseFromString(message)
-        cnt =1
-        for article in response.article:
-            if article.type == 0:
-                type = "FASHION"
-            elif article.type == 1:
-                type = "SPORTS"
-            elif article.type  == 2:
-                type = "POLITICS"
+        result = channel.queue_declare(queue='', exclusive=True)
+        callback_queue = result.method.queue
+        channel.basic_consume(queue=callback_queue, on_message_callback=get_articles_callback,
+                auto_ack=True)
 
-            date = datetime.fromtimestamp(article.time_rec.seconds)
 
-            print(str(cnt) + ") " + "\n" + type + "\n" + article.author + "\n" + str(date) + "\n" +  article.content)
-            cnt+=1
+        serialized_msg = request.SerializeToString()
+        global corr_id
+        corr_id = str(uuid.uuid4())
+        print("Sending to server queue: " + str(server[2]) + "_server_queue" )
+        channel.basic_publish(
+            exchange='',
+            routing_key=str(server[2]) + "_server_queue",
+            properties=pika.BasicProperties(
+                reply_to=callback_queue,
+                correlation_id=corr_id,
+            ),
+            body=serialized_msg)
         
+        connection.process_data_events(time_limit=None)
+
+
+        
+def registry_callback(ch, method, properties, body):
+    global corr_id
+    if properties.correlation_id == corr_id:
+        status = Message_pb2.GetServerListResponse()
+        status.ParseFromString(body)
+        for details in status.serverDetails:
+            print(details.name + " - " + details.address.IP + ":" + str(details.address.port))
 
 def runRegistryServer(arg):
-    context = zmq.Context()
-    socket = context.socket(zmq.REQ)
-    socket.connect("tcp://localhost:5556")
+    result = channel.queue_declare(queue='', exclusive=True)
+    callback_queue = result.method.queue
+    channel.basic_consume(queue=callback_queue, on_message_callback=registry_callback,
+            auto_ack=True)
+    
     request = Message_pb2.RegisterRequest(typeOfRequest="getServerList", name=arg[0], address=Message_pb2.Address(IP=arg[1], port=int(arg[2])))
     serialized_msg = request.SerializeToString()
-    socket.send(serialized_msg)
-    message = socket.recv()
-    status = Message_pb2.GetServerListResponse()
-    status.ParseFromString(message)
-    for details in status.serverDetails:
-        print(details.name + " - " + details.address.IP + ":" + str(details.address.port))
+    global corr_id
+    corr_id = str(uuid.uuid4())
 
+    channel.basic_publish(
+        exchange='',
+        routing_key='registry_server_queue',
+        properties=pika.BasicProperties(
+            reply_to=callback_queue,
+            correlation_id=corr_id,
+        ),
+        body=serialized_msg)
+    
+    connection.process_data_events(time_limit=None)
 
 def runServer(client, choice):
     print("Enter Server Information")
@@ -164,6 +257,7 @@ if __name__ == '__main__':
             break
         else:
             runServer(arg, inp)
+            
         print("Choose Option: \n1. Get List of Server \n2. Join to Server \n3. Leave Server \n4. Get Articles \n5. Publish Article \n6. Exit")
         inp = int(input())
     

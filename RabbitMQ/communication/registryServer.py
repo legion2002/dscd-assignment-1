@@ -8,14 +8,6 @@ import Message_pb2
 
 MAX_SERVER = 4
 Servers = {}
-
-
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
-channel = connection.channel()
-channel.queue_declare(queue='rpc_queue')
-channel.basic_qos(prefetch_count=1)
-
-
 # RabbitMQ port number is 5672
 
 def addServers(name, IP, port):
@@ -52,35 +44,39 @@ def Register(request : Message_pb2.RegisterRequest, props, method):
                     body=serialized_msg)
     channel.basic_ack(delivery_tag=method.delivery_tag)
 
-def GetServerList(request : Message_pb2.GetServerListRequest):
+def GetServerList(request : Message_pb2.GetServerListRequest, props, method):
     print("SERVER LIST REQUEST FROM " + request.address.IP + ":" + str(request.address.port))
-    # serverList = []
-    # for server in Servers.keys():
-    #     IP = Servers[server][0]
-    #     port = Servers[server][1]
-    #     serverList.append(Message_pb2.ServerAddress(name=server, address= Message_pb2.Address(IP=IP, port=port)))
-    # response = Message_pb2.GetServerListResponse()
-    # response.serverDetails.extend(serverList)
-    # serialized_msg = response.SerializeToString()
-    # channel.basic_publish(exchange='', routing_key='test', body=serialized_msg)
+    serverList = []
+    for server in Servers.keys():
+        IP = Servers[server][0]
+        port = Servers[server][1]
+        serverList.append(Message_pb2.ServerAddress(name=server, address= Message_pb2.Address(IP=IP, port=port)))
+    response = Message_pb2.GetServerListResponse()
+    response.serverDetails.extend(serverList)
+    serialized_msg = response.SerializeToString()
 
-def serve():
-    while True:
-        #  Wait for next request from client
-        registerRequest = Message_pb2.RegisterRequest()
-        serverListRequest = Message_pb2.GetServerListRequest()
+    channel.basic_publish(exchange='', routing_key=props.reply_to,
+                    properties=pika.BasicProperties(correlation_id = \
+                    props.correlation_id),
+                    body=serialized_msg)
+    channel.basic_ack(delivery_tag=method.delivery_tag)
 
-        def callback(ch, method, properties, body):
-            registerRequest.ParseFromString(body)
-            serverListRequest.ParseFromString(body)
-            if(registerRequest.typeOfRequest == "register"):
-                Register(registerRequest, properties, method)
-            elif(serverListRequest.typeOfRequest == "getServerList"):
-                GetServerList(serverListRequest)
+#  Wait for next request from client
 
-        channel.basic_consume(queue='rpc_queue', on_message_callback=callback)
-        channel.start_consuming()
-
+def callback(ch, method, properties, body):
+    registerRequest = Message_pb2.RegisterRequest()
+    serverListRequest = Message_pb2.GetServerListRequest()
+    registerRequest.ParseFromString(body)
+    serverListRequest.ParseFromString(body)
+    if(registerRequest.typeOfRequest == "register"):
+        Register(registerRequest, properties, method)
+    elif(serverListRequest.typeOfRequest == "getServerList"):
+        GetServerList(serverListRequest, properties, method)
 
 if __name__ == '__main__':
-    serve()
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost')) # Connect to exchange
+    channel = connection.channel() # Create Channel
+    channel.queue_declare(queue='registry_server_queue')
+    channel.basic_qos(prefetch_count=1)
+    channel.basic_consume(queue='registry_server_queue', on_message_callback=callback)
+    channel.start_consuming()

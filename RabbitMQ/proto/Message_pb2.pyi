@@ -8,12 +8,14 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 DESCRIPTOR: _descriptor.FileDescriptor
 
 class Address(_message.Message):
-    __slots__ = ["IP", "port"]
+    __slots__ = ["IP", "port", "routing_key"]
     IP: str
     IP_FIELD_NUMBER: _ClassVar[int]
     PORT_FIELD_NUMBER: _ClassVar[int]
+    ROUTING_KEY_FIELD_NUMBER: _ClassVar[int]
     port: int
-    def __init__(self, IP: _Optional[str] = ..., port: _Optional[int] = ...) -> None: ...
+    routing_key: str
+    def __init__(self, IP: _Optional[str] = ..., port: _Optional[int] = ..., routing_key: _Optional[str] = ...) -> None: ...
 
 class ArticleFormat(_message.Message):
     __slots__ = ["author", "content", "time_rec", "type"]

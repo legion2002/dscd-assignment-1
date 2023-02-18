@@ -5,6 +5,7 @@ import "google/protobuf/timestamp.proto";
 message Address{
     string IP = 1;
     int32 port = 2;
+    string routing_key = 3;
 }
 
 message ServerAddress{

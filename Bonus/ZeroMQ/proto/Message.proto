@@ -18,7 +18,6 @@ message StandardFormat{
     }
 }
 
-
 message ServerAddress{
     string name = 1;
     Address address = 2;

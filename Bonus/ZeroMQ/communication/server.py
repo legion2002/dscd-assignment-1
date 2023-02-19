@@ -10,9 +10,9 @@ import datetime
 import threading
 
 MAX_CLIENTS = 4
+SERVERS = {}
 CLIENTELE = {}
 ARTICLES = []
-
 
 
 def addClient(uuid, name, IP, port):
@@ -95,12 +95,32 @@ def GetArticles(request):
     response.article.extend(articlesRequested)
     return response
 
-def JoinServerToServer(request):
+
+def SendArticlesToServer():
+    connectToPrevServer()
     articlesRequested = []
+    for articles in ARTICLES:
+        articlesRequested.append(articles)
+    response = Message_pb2.GetArticlesResponse()
+    response.article.extend(articlesRequested)
+    return response
+
+
+def JoinServerToServer(request):
     print("JOIN REQUEST FROM SERVER: " + request.serverDetails.name + " " + request.serverDetails.address.IP+":"+str(request.serverDetails.address.port))
+    SERVERS[request.serverDetails.name] = [request.serverDetails.address.IP, str(request.serverDetails.address.port)]
     return Message_pb2.JoinServerResponse(status="SUCCESS")
 
 
+def articlesReceived(articles):
+    for article in articles:
+        if(article not in ARTICLES):
+            print("ADDITION:")
+            print(article)
+            ARTICLES.append(article)
+    
+
+            
 
 def connectToRegistry(arg):
     context = zmq.Context()
@@ -116,13 +136,6 @@ def connectToRegistry(arg):
     if "SUCCESS" in status.status:
         return 0
 
-def SendArticlesToServer():
-    articlesRequested = []
-    for articles in ARTICLES:
-        articlesRequested.append(articles)
-    response = Message_pb2.GetArticlesResponse()
-    response.article.extend(articlesRequested)
-    return response
 
 def connectToClient(arg):
     context = zmq.Context()
@@ -165,6 +178,12 @@ def createIntermediate(arg):
             server[0] = list_string[0]
             server[1], server[2] = list_string[1].split(":")
             server[2] = int(server[2])
+            if server[0] == arg[0]:
+                print("Can not join same server")
+                print("Do you wish to join a server? (y/n)")
+                inp = input()
+                continue
+
             socket.connect("tcp://localhost:" + str(server[2]))
             request = Message_pb2.GetArticlesForServer(serverDetails=Message_pb2.ServerAddress(name=arg[0], address=Message_pb2.Address(IP=arg[1], port=int(arg[2]))))
             data = Message_pb2.StandardFormat(typeOfRequest="articlesForServer", articlesServer=request)
@@ -178,8 +197,7 @@ def createIntermediate(arg):
             message = socket.recv()
             response = Message_pb2.GetArticlesResponse()
             response.ParseFromString(message)
-            print(response.article)
-            
+            articlesReceived(response.article)
         
         print("Do you wish to join a server? (y/n)")
         inp = input()

@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+import "Article.proto";
+
+service CommWithRegistryServer{
+    rpc GetServerList(GetServerListRequest) returns (stream GetServerListResponse) {}
+    rpc Register(RegisterRequest) returns (RegisterResponse) {}
+}
+
+message GetServerListRequest{
+    string name = 1;
+    Address address = 2;
+}
+
+message GetServerListResponse{
+    string name = 1;
+    Address address = 2;
+}
+
+message RegisterRequest{
+    string name = 1;
+    Address address = 2;
+}
+
+message RegisterResponse{
+    string status = 1;
+}

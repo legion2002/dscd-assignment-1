@@ -115,7 +115,7 @@ def connectToRegistry(arg):
     _port= int(arg[2])
     _routing_key = arg[2] + "_server_queue"
 
-    request = Message_pb2.RegisterRequest(typeOfRequest = "register", name=arg[0], address=Message_pb2.Address(IP=_IP, port=_port, routing_key = _routing_key))
+    request = Message_pb2.RegisterRequest(name=arg[0], address=Message_pb2.Address(IP=_IP, port=_port, routing_key = _routing_key))
     serialized_msg = request.SerializeToString()
 
     global corr_id

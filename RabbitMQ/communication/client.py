@@ -60,7 +60,7 @@ def joinServer(client, server):
     channel.basic_consume(queue=callback_queue, on_message_callback=join_server_callback,
             auto_ack=True)
 
-    request = Message_pb2.JoinServerRequest(uuid=unique_id, name=client[0], address=Message_pb2.Address(IP=client[1], port=int(client[2])), typeOfRequest="joinServer")
+    request = Message_pb2.JoinServerRequest(uuid=unique_id, name=client[0], address=Message_pb2.Address(IP=client[1], port=int(client[2])))
     data = Message_pb2.StandardFormat(typeOfRequest="joinServer", join=request)
     serialized_msg = data.SerializeToString()
     global corr_id
@@ -83,7 +83,7 @@ def leaveServer(client, server):
     channel.basic_consume(queue=callback_queue, on_message_callback=leave_server_callback,
             auto_ack=True)
 
-    request = Message_pb2.LeaveServerRequest(uuid=unique_id, typeOfRequest="leaveServer")
+    request = Message_pb2.LeaveServerRequest(uuid=unique_id)
     data = Message_pb2.StandardFormat(typeOfRequest="leaveServer", leave=request)
     serialized_msg = data.SerializeToString()
     global corr_id
@@ -127,7 +127,7 @@ def publishArticles(client, server):
             channel.basic_consume(queue=callback_queue, on_message_callback=publish_articles_callback,
                     auto_ack=True)
 
-            request = Message_pb2.PublishArticlesRequest(uuid=unique_id,  article=Message_pb2.ArticleFormat(type=typeRequest, author=author, content=content), typeOfRequest="publishArticle")
+            request = Message_pb2.PublishArticlesRequest(uuid=unique_id,  article=Message_pb2.ArticleFormat(type=typeRequest, author=author, content=content))
             data = Message_pb2.StandardFormat(typeOfRequest="publishArticle", publish=request)
             serialized_msg = data.SerializeToString()
             global corr_id
@@ -173,7 +173,7 @@ def getArticles(client, server):
         time = Timestamp(seconds=int(timestamp))
 
         requestedArticle = Message_pb2.ArticleRequest(type=typeRequest, author=info[1], time_rec=time)
-        request = Message_pb2.GetArticlesRequest(uuid = unique_id, typeOfRequest = "getArticle", article=requestedArticle)
+        request = Message_pb2.GetArticlesRequest(uuid = unique_id, article=requestedArticle)
         
         result = channel.queue_declare(queue='', exclusive=True)
         callback_queue = result.method.queue
@@ -212,7 +212,7 @@ def runRegistryServer(arg):
     channel.basic_consume(queue=callback_queue, on_message_callback=registry_callback,
             auto_ack=True)
     
-    request = Message_pb2.RegisterRequest(typeOfRequest="getServerList", name=arg[0], address=Message_pb2.Address(IP=arg[1], port=int(arg[2])))
+    request = Message_pb2.RegisterRequest(name=arg[0], address=Message_pb2.Address(IP=arg[1], port=int(arg[2])))
     serialized_msg = request.SerializeToString()
     global corr_id
     corr_id = str(uuid.uuid4())

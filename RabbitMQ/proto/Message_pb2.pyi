@@ -65,12 +65,14 @@ class GetArticlesResponse(_message.Message):
     def __init__(self, article: _Optional[_Iterable[_Union[ArticleFormat, _Mapping]]] = ...) -> None: ...
 
 class GetServerListRequest(_message.Message):
-    __slots__ = ["address", "name"]
+    __slots__ = ["address", "name", "typeOfRequest"]
     ADDRESS_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
+    TYPEOFREQUEST_FIELD_NUMBER: _ClassVar[int]
     address: Address
     name: str
-    def __init__(self, name: _Optional[str] = ..., address: _Optional[_Union[Address, _Mapping]] = ...) -> None: ...
+    typeOfRequest: str
+    def __init__(self, typeOfRequest: _Optional[str] = ..., name: _Optional[str] = ..., address: _Optional[_Union[Address, _Mapping]] = ...) -> None: ...
 
 class GetServerListResponse(_message.Message):
     __slots__ = ["serverDetails"]
@@ -121,12 +123,14 @@ class PublishArticlesResponse(_message.Message):
     def __init__(self, status: _Optional[str] = ...) -> None: ...
 
 class RegisterRequest(_message.Message):
-    __slots__ = ["address", "name"]
+    __slots__ = ["address", "name", "typeOfRequest"]
     ADDRESS_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
+    TYPEOFREQUEST_FIELD_NUMBER: _ClassVar[int]
     address: Address
     name: str
-    def __init__(self, name: _Optional[str] = ..., address: _Optional[_Union[Address, _Mapping]] = ...) -> None: ...
+    typeOfRequest: str
+    def __init__(self, typeOfRequest: _Optional[str] = ..., name: _Optional[str] = ..., address: _Optional[_Union[Address, _Mapping]] = ...) -> None: ...
 
 class RegisterResponse(_message.Message):
     __slots__ = ["status"]
@@ -143,15 +147,19 @@ class ServerAddress(_message.Message):
     def __init__(self, name: _Optional[str] = ..., address: _Optional[_Union[Address, _Mapping]] = ...) -> None: ...
 
 class StandardFormat(_message.Message):
-    __slots__ = ["getArticles", "join", "leave", "publish", "typeOfRequest"]
+    __slots__ = ["getArticles", "getServers", "join", "leave", "publish", "register", "typeOfRequest"]
     GETARTICLES_FIELD_NUMBER: _ClassVar[int]
+    GETSERVERS_FIELD_NUMBER: _ClassVar[int]
     JOIN_FIELD_NUMBER: _ClassVar[int]
     LEAVE_FIELD_NUMBER: _ClassVar[int]
     PUBLISH_FIELD_NUMBER: _ClassVar[int]
+    REGISTER_FIELD_NUMBER: _ClassVar[int]
     TYPEOFREQUEST_FIELD_NUMBER: _ClassVar[int]
     getArticles: GetArticlesRequest
+    getServers: GetServerListRequest
     join: JoinServerRequest
     leave: LeaveServerRequest
     publish: PublishArticlesRequest
+    register: RegisterRequest
     typeOfRequest: str
-    def __init__(self, typeOfRequest: _Optional[str] = ..., join: _Optional[_Union[JoinServerRequest, _Mapping]] = ..., leave: _Optional[_Union[LeaveServerRequest, _Mapping]] = ..., getArticles: _Optional[_Union[GetArticlesRequest, _Mapping]] = ..., publish: _Optional[_Union[PublishArticlesRequest, _Mapping]] = ...) -> None: ...
+    def __init__(self, typeOfRequest: _Optional[str] = ..., join: _Optional[_Union[JoinServerRequest, _Mapping]] = ..., leave: _Optional[_Union[LeaveServerRequest, _Mapping]] = ..., getArticles: _Optional[_Union[GetArticlesRequest, _Mapping]] = ..., publish: _Optional[_Union[PublishArticlesRequest, _Mapping]] = ..., register: _Optional[_Union[RegisterRequest, _Mapping]] = ..., getServers: _Optional[_Union[GetServerListRequest, _Mapping]] = ...) -> None: ...

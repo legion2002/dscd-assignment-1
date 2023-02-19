@@ -212,8 +212,10 @@ def runRegistryServer(arg):
     channel.basic_consume(queue=callback_queue, on_message_callback=registry_callback,
             auto_ack=True)
     
-    request = Message_pb2.RegisterRequest(name=arg[0], address=Message_pb2.Address(IP=arg[1], port=int(arg[2])))
-    serialized_msg = request.SerializeToString()
+    request = Message_pb2.GetServerListRequest(name=arg[0], address=Message_pb2.Address(IP=arg[1], port=int(arg[2])))
+    data = Message_pb2.StandardFormat(typeOfRequest="getServerList", getServers=request)
+    serialized_msg = data.SerializeToString()
+
     global corr_id
     corr_id = str(uuid.uuid4())
 

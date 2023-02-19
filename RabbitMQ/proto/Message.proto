@@ -15,8 +15,11 @@ message StandardFormat{
         LeaveServerRequest leave = 3;
         GetArticlesRequest getArticles = 4;
         PublishArticlesRequest publish = 5;
+        RegisterRequest register = 6;
+        GetServerListRequest getServers = 7;
     }
 }
+
 
 message ServerAddress{
     string name = 1;
@@ -50,8 +53,9 @@ message ArticleRequest{
 }
 
 message GetServerListRequest{
-    string name = 1;
-    Address address = 2;
+    string typeOfRequest = 1;
+    string name = 2;
+    Address address = 3;
 }
 
 message GetServerListResponse{
@@ -59,8 +63,9 @@ message GetServerListResponse{
 }
 
 message RegisterRequest{
-    string name = 1;
-    Address address = 2;
+    string typeOfRequest = 1;
+    string name = 2;
+    Address address = 3;
 }
 
 message RegisterResponse{

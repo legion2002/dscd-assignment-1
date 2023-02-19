@@ -64,14 +64,13 @@ def GetServerList(request : Message_pb2.GetServerListRequest, props, method):
 #  Wait for next request from client
 
 def callback(ch, method, properties, body):
-    registerRequest = Message_pb2.RegisterRequest()
-    serverListRequest = Message_pb2.GetServerListRequest()
-    registerRequest.ParseFromString(body)
-    serverListRequest.ParseFromString(body)
-    if(registerRequest.typeOfRequest == "register"):
-        Register(registerRequest, properties, method)
-    elif(serverListRequest.typeOfRequest == "getServerList"):
-        GetServerList(serverListRequest, properties, method)
+    standardFormat = Message_pb2.StandardFormat()
+    standardFormat.ParseFromString(body)
+    
+    if(standardFormat.typeOfRequest == "register"):
+        Register(standardFormat.register, properties, method)
+    elif(standardFormat.typeOfRequest == "getServerList"):
+        GetServerList(standardFormat.getServers, properties, method)
 
 if __name__ == '__main__':
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost')) # Connect to exchange

@@ -1,0 +1,111 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+message Address{
+    string IP = 1;
+    int32 port = 2;
+}
+
+message StandardFormat{
+    string typeOfRequest = 1;
+    oneof data{
+        JoinServerRequest join = 2;
+        LeaveServerRequest leave = 3;
+        GetArticlesRequest getArticles = 4;
+        PublishArticlesRequest publish = 5;
+        GetArticlesForServer articlesServer = 6;
+    }
+}
+
+
+message ServerAddress{
+    string name = 1;
+    Address address = 2;
+}
+
+message GetArticlesForServer{
+    ServerAddress serverDetails = 1;
+}
+
+message ArticleFormat{
+    enum Type{
+        FASHION = 0;
+        SPORTS = 1;
+        POLITICS = 2;
+    }
+
+    Type type = 1;
+    string author = 2;
+    google.protobuf.Timestamp time_rec = 3;
+    string content = 4;
+}
+
+message ArticleRequest{
+    enum Type{
+        FASHION = 0;
+        SPORTS = 1;
+        POLITICS = 2;
+        ANYTHING = 3;
+    }
+
+    Type type = 1;
+    string author = 2;
+    google.protobuf.Timestamp time_rec = 3;
+}
+
+message GetServerListRequest{
+    string typeOfRequest = 1;
+    string name = 2;
+    Address address = 3;
+}
+
+message GetServerListResponse{
+    repeated ServerAddress serverDetails = 1;
+}
+
+message RegisterRequest{
+    string typeOfRequest = 1;
+    string name = 2;
+    Address address = 3;
+}
+
+message RegisterResponse{
+    string status = 1;
+}
+
+message JoinServerRequest{
+    string uuid = 1;
+    string name = 2;
+    Address address = 3;;
+}
+
+message LeaveServerRequest{
+    string uuid = 1;;
+}
+
+message GetArticlesRequest{;
+    string uuid = 1;
+    ArticleRequest article = 2;
+}
+
+message PublishArticlesRequest{
+    string uuid = 1;
+    ArticleFormat article = 2;
+}
+
+message JoinServerResponse{
+    string status = 1;
+}
+
+message LeaveServerResponse{
+    string status = 1;
+}
+
+message GetArticlesResponse{
+    repeated ArticleFormat article = 1;
+}
+
+message PublishArticlesResponse{
+    string status = 1;
+}

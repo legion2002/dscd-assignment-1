@@ -94,18 +94,22 @@ def GetAllArticles():
     return response
 
 
-def GetArticles(request):
+def GetArticles(request, arg):
     articlesRequested = []
-    print(SERVERS)
     for server in SERVERS.keys():
-        gotArticles = askServerForArticles(server)
-        print(gotArticles)
-        for article in gotArticles:
+        socket_client.connect("tcp://localhost:" + SERVERS[server][1])
+        requestedArticle = Message_pb2.ArticleRequest(type=request.article.type, author=request.article.author, time_rec=request.article.time_rec)
+        req = Message_pb2.GetArticlesRequest(uuid = arg[0], article=requestedArticle)
+        socket_client.send(Message_pb2.StandardFormat(typeOfRequest="getArticle", getArticles=req).SerializeToString())
+        message = socket_client.recv()
+        response = Message_pb2.GetArticlesResponse()
+        response.ParseFromString(message)
+        for article in response.article:
             if article not in ARTICLES:
                 ARTICLES.append(article)
-        
+
     for client in CLIENTELE.keys():
-        if CLIENTELE[client][2] == request.uuid:
+        if CLIENTELE[client][2] == request.uuid or client == request.uuid:
             print("ARTICLE REQUEST FROM " + request.uuid)
             for articles in ARTICLES:
                 timestamp = articles.time_rec
@@ -121,13 +125,14 @@ def GetArticles(request):
                         if(request.article.author == "" and request.article.type == articles.type):
                             articlesRequested.append(articles)
 
-        
+    
     response = Message_pb2.GetArticlesResponse()
     response.article.extend(articlesRequested)
     return response
 
 def JoinServerToServer(request):
     print("JOIN REQUEST FROM SERVER: " + request.serverDetails.name + " " + request.serverDetails.address.IP+":"+str(request.serverDetails.address.port))
+    CLIENTELE[request.serverDetails.name] = [request.serverDetails.address.IP, request.serverDetails.address.port, "UUID"]
     return Message_pb2.JoinServerResponse(status="SUCCESS")
 
 
@@ -160,7 +165,7 @@ def connectToClient(arg):
         elif(request.typeOfRequest == "leaveServer"):
             result = LeaveServer(request.leave).SerializeToString()
         elif(request.typeOfRequest == "getArticle"):
-            result = GetArticles(request.getArticles).SerializeToString()
+            result = GetArticles(request.getArticles, arg).SerializeToString()
         elif(request.typeOfRequest == "publishArticle"):
             result = PublishArticle(request.publish).SerializeToString()
         elif(request.typeOfRequest == "articlesForServer"):

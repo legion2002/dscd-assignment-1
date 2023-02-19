@@ -86,6 +86,7 @@ message LeaveServerRequest{
 message GetArticlesRequest{;
     string uuid = 1;
     ArticleRequest article = 2;
+    repeated string notToVisit = 3;
 }
 
 message PublishArticlesRequest{

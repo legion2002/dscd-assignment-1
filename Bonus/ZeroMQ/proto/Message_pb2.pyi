@@ -55,12 +55,14 @@ class GetArticlesForServer(_message.Message):
     def __init__(self, serverDetails: _Optional[_Union[ServerAddress, _Mapping]] = ...) -> None: ...
 
 class GetArticlesRequest(_message.Message):
-    __slots__ = ["article", "uuid"]
+    __slots__ = ["article", "notToVisit", "uuid"]
     ARTICLE_FIELD_NUMBER: _ClassVar[int]
+    NOTTOVISIT_FIELD_NUMBER: _ClassVar[int]
     UUID_FIELD_NUMBER: _ClassVar[int]
     article: ArticleRequest
+    notToVisit: _containers.RepeatedScalarFieldContainer[str]
     uuid: str
-    def __init__(self, uuid: _Optional[str] = ..., article: _Optional[_Union[ArticleRequest, _Mapping]] = ...) -> None: ...
+    def __init__(self, uuid: _Optional[str] = ..., article: _Optional[_Union[ArticleRequest, _Mapping]] = ..., notToVisit: _Optional[_Iterable[str]] = ...) -> None: ...
 
 class GetArticlesResponse(_message.Message):
     __slots__ = ["article"]

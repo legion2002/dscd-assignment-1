@@ -18,7 +18,6 @@ context_client = zmq.Context()
 socket_client = context_client.socket(zmq.REQ)
 
 
-
 def addClient(uuid, name, IP, port):
     if name in CLIENTELE.keys():
         return 1
@@ -77,33 +76,25 @@ def PublishArticle(request):
 
     return Message_pb2.PublishArticlesResponse(status="FAIL")
 
-def askServerForArticles(server):
-    socket_client.connect("tcp://localhost:" + SERVERS[server][1])
-    socket_client.send(Message_pb2.StandardFormat(typeOfRequest="getAllArticles").SerializeToString())
-    message = socket_client.recv()
-    response = Message_pb2.GetArticlesResponse()
-    response.ParseFromString(message)
-    return response.article
-
-def GetAllArticles():
-    articlesRequested = []
-    for articles in ARTICLES:
-        articlesRequested.append(articles)
-    response = Message_pb2.GetArticlesResponse()
-    response.article.extend(articlesRequested)
-    return response
-
 
 def GetArticles(request, arg):
     articlesRequested = []
+    doNotVisit = []
+    doNotVisit.append(arg[0])
+
+    doNotVisit.extend(request.notToVisit)
     for server in SERVERS.keys():
+        if server in doNotVisit:
+            continue
         socket_client.connect("tcp://localhost:" + SERVERS[server][1])
         requestedArticle = Message_pb2.ArticleRequest(type=request.article.type, author=request.article.author, time_rec=request.article.time_rec)
         req = Message_pb2.GetArticlesRequest(uuid = arg[0], article=requestedArticle)
+        req.notToVisit.extend(doNotVisit)
         socket_client.send(Message_pb2.StandardFormat(typeOfRequest="getArticle", getArticles=req).SerializeToString())
         message = socket_client.recv()
         response = Message_pb2.GetArticlesResponse()
         response.ParseFromString(message)
+        
         for article in response.article:
             if article not in ARTICLES:
                 ARTICLES.append(article)
@@ -124,11 +115,11 @@ def GetArticles(request, arg):
                     else:
                         if(request.article.author == "" and request.article.type == articles.type):
                             articlesRequested.append(articles)
-
     
     response = Message_pb2.GetArticlesResponse()
     response.article.extend(articlesRequested)
     return response
+
 
 def JoinServerToServer(request):
     print("JOIN REQUEST FROM SERVER: " + request.serverDetails.name + " " + request.serverDetails.address.IP+":"+str(request.serverDetails.address.port))
@@ -170,12 +161,10 @@ def connectToClient(arg):
             result = PublishArticle(request.publish).SerializeToString()
         elif(request.typeOfRequest == "articlesForServer"):
             result = JoinServerToServer(request.articlesServer).SerializeToString()
-        elif(request.typeOfRequest == "getAllArticles"):
-            result = GetAllArticles().SerializeToString()
         socket.send(result)
 
+
 def createIntermediate(arg):
-        
     print("Do you wish to join a server? (y/n)")
     inp = input()
     while(True):
@@ -203,8 +192,7 @@ def createIntermediate(arg):
             response.ParseFromString(message)
             print(response)
             if "SUCCESS" in response.status:
-                SERVERS[server[0]] = [server[1], str(server[2])]
-            
+                SERVERS[server[0]] = [server[1], str(server[2])]   
         
         print("Do you wish to join a server? (y/n)")
         inp = input()
@@ -220,5 +208,4 @@ if __name__ == '__main__':
         thread2.start()
         thread1.join()
         thread2.join()
-        
         

@@ -115,36 +115,18 @@ def connectToClient(arg):
     socket.bind("tcp://*:" + str(arg[2]))
     while True:
         message = socket.recv()
-        joinServerRequest = Message_pb2.JoinServerRequest()
-        leaveServerRequest = Message_pb2.LeaveServerRequest()
-        getArticlesRequest = Message_pb2.GetArticlesRequest()
-        publishArticlesRequest = Message_pb2.PublishArticlesRequest()
+        request = Message_pb2.StandardFormat()
+        request.ParseFromString(message)
 
-        joinServerRequest.ParseFromString(message)
-        leaveServerRequest.ParseFromString(message)
-        getArticlesRequest.ParseFromString(message)
-        publishArticlesRequest.ParseFromString(message)
-
-        if(joinServerRequest.typeOfRequest == "joinServer"):
-            result = JoinServer(joinServerRequest)
-            time.sleep(1)
-            result = result.SerializeToString()
-            socket.send(result)
-        elif(leaveServerRequest.typeOfRequest == "leaveServer"):
-            result = LeaveServer(leaveServerRequest)
-            time.sleep(1)
-            result = result.SerializeToString()
-            socket.send(result)
-        elif(getArticlesRequest.typeOfRequest == "getArticle"):
-            result = GetArticles(getArticlesRequest)
-            time.sleep(1)
-            result = result.SerializeToString()
-            socket.send(result)
-        elif(publishArticlesRequest.typeOfRequest == "publishArticle"):
-            result = PublishArticle(publishArticlesRequest)
-            time.sleep(1)
-            result = result.SerializeToString()
-            socket.send(result)
+        if(request.typeOfRequest == "joinServer"):
+            result = JoinServer(request.join).SerializeToString()
+        elif(request.typeOfRequest == "leaveServer"):
+            result = LeaveServer(request.leave).SerializeToString()
+        elif(request.typeOfRequest == "getArticle"):
+            result = GetArticles(request.getArticles).SerializeToString()
+        elif(request.typeOfRequest == "publishArticle"):
+            result = PublishArticle(request.publish).SerializeToString()
+        socket.send(result)
 
 
 if __name__ == '__main__':

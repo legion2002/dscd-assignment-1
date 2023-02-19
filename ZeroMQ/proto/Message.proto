@@ -7,6 +7,16 @@ message Address{
     int32 port = 2;
 }
 
+message StandardFormat{
+    string typeOfRequest = 1;
+    oneof data{
+        JoinServerRequest join = 2;
+        LeaveServerRequest leave = 3;
+        GetArticlesRequest getArticles = 4;
+        PublishArticlesRequest publish = 5;
+    }
+}
+
 message ServerAddress{
     string name = 1;
     Address address = 2;

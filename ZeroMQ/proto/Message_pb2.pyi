@@ -151,3 +151,17 @@ class ServerAddress(_message.Message):
     address: Address
     name: str
     def __init__(self, name: _Optional[str] = ..., address: _Optional[_Union[Address, _Mapping]] = ...) -> None: ...
+
+class StandardFormat(_message.Message):
+    __slots__ = ["getArticles", "join", "leave", "publish", "typeOfRequest"]
+    GETARTICLES_FIELD_NUMBER: _ClassVar[int]
+    JOIN_FIELD_NUMBER: _ClassVar[int]
+    LEAVE_FIELD_NUMBER: _ClassVar[int]
+    PUBLISH_FIELD_NUMBER: _ClassVar[int]
+    TYPEOFREQUEST_FIELD_NUMBER: _ClassVar[int]
+    getArticles: GetArticlesRequest
+    join: JoinServerRequest
+    leave: LeaveServerRequest
+    publish: PublishArticlesRequest
+    typeOfRequest: str
+    def __init__(self, typeOfRequest: _Optional[str] = ..., join: _Optional[_Union[JoinServerRequest, _Mapping]] = ..., leave: _Optional[_Union[LeaveServerRequest, _Mapping]] = ..., getArticles: _Optional[_Union[GetArticlesRequest, _Mapping]] = ..., publish: _Optional[_Union[PublishArticlesRequest, _Mapping]] = ...) -> None: ...

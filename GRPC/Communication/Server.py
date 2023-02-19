@@ -1,19 +1,19 @@
 from __future__ import print_function
 
 import sys
-sys.path.insert(1, '../proto_files')
+sys.path.insert(1, '../proto')
 
 from concurrent import futures
 from google.protobuf.timestamp_pb2 import Timestamp
 
-import grpc
-import logging
-import datetime
 import CommWithRegistryServer_pb2_grpc
 import CommWithRegistryServer_pb2
 import Article_pb2
 import CommWithServer_pb2_grpc
 import CommWithServer_pb2
+import grpc
+import logging
+import datetime
 
 MAX_CLIENTS = 2
 CLIENTELE = {}
@@ -44,7 +44,6 @@ def removeClient(uuid):
         if CLIENTELE[client][2] == uuid:
             del CLIENTELE[client]
             return 0
-    
     return 1
 
 
@@ -56,7 +55,6 @@ def registerServer(stub, request):
 
 
 class CommWithServerServicer(CommWithServer_pb2_grpc.CommWithServerServicer):
-
 
     def JoinServer(self, request, context):
         print("JOIN REQUEST FROM " + request.uuid)

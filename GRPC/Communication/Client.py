@@ -1,9 +1,8 @@
 from __future__ import print_function
 
 import sys
-sys.path.insert(1, '../proto_files')
+sys.path.insert(1, '../proto')
 
-from concurrent import futures
 from google.protobuf.timestamp_pb2 import Timestamp
 from datetime import datetime
 
@@ -41,7 +40,6 @@ def joinServer(client, server):
         print(status)
 
 
-
 def leaveServer(client, server):
     address = server[1] + ":" + str(server[2])
     with grpc.insecure_channel(address) as channel:
@@ -77,14 +75,12 @@ def getArticles(client, server):
         date_time = datetime.strptime(info[2], '%y-%m-%d %H:%M:%S')
         timestamp = date_time.timestamp()
         time = Timestamp(seconds=int(timestamp))
-
         address = server[1] + ":" + str(server[2])
         with grpc.insecure_channel(address) as channel:
             stub = CommWithServer_pb2_grpc.CommWithServerStub(channel)
             requestedArticle = Article_pb2.ArticleRequest(type=typeRequest, author=info[1], time_rec=time)
             request = CommWithServer_pb2.GetArticlesRequest(uuid = unique_id, article=requestedArticle)
             status = stub.GetArticles(request)
-            
             cnt =1
             for y in status:
                 x = y.article
@@ -96,7 +92,6 @@ def getArticles(client, server):
                     type = "POLITICS"
 
                 date = datetime.fromtimestamp(x.time_rec.seconds)
-
                 print(str(cnt) + ") " + "\n" + type + "\n" + x.author + "\n" + str(date) + "\n" +  x.content)
                 cnt+=1
 

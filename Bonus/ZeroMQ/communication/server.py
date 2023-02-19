@@ -4,12 +4,11 @@ sys.path.insert(1, '../proto')
 from google.protobuf.timestamp_pb2 import Timestamp
 
 import Message_pb2
-import time
 import zmq
 import datetime
 import threading
 
-MAX_CLIENTS = 4
+MAX_CLIENTS = 2
 SERVERS = {}
 CLIENTELE = {}
 ARTICLES = []
@@ -42,7 +41,6 @@ def removeClient(uuid):
         if CLIENTELE[client][2] == uuid:
             del CLIENTELE[client]
             return 0
-    
     return 1
 
 
@@ -115,7 +113,6 @@ def GetArticles(request, arg):
                     else:
                         if(request.article.author == "" and request.article.type == articles.type):
                             articlesRequested.append(articles)
-    
     response = Message_pb2.GetArticlesResponse()
     response.article.extend(articlesRequested)
     return response

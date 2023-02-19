@@ -1,14 +1,13 @@
 import sys
-sys.path.insert(1, '../proto_files')
+sys.path.insert(1, '../proto')
 
 from concurrent import futures
 
-import logging
-import grpc
 import CommWithRegistryServer_pb2_grpc
 import CommWithRegistryServer_pb2
 import Article_pb2
-
+import logging
+import grpc
 
 MAX_SERVER = 2
 Servers = {}
@@ -33,7 +32,6 @@ def addServers(name, IP, port):
 
 
 class CommWithRegistryServerServicer(CommWithRegistryServer_pb2_grpc.CommWithRegistryServerServicer):
-
 
     def Register(self, request, context):
         print("JOIN REQUEST FROM " + request.address.IP + ":" + str(request.address.port))

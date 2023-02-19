@@ -1,9 +1,9 @@
 import sys
 sys.path.insert(1, '../proto')
 
-import time
-import zmq
 import Message_pb2
+import zmq
+import time
 
 MAX_SERVER = 4
 Servers = {}
@@ -39,7 +39,6 @@ def Register(request : Message_pb2.RegisterRequest):
         serialized_msg = status.SerializeToString()
         socket.send(serialized_msg)
         time.sleep(1)
-        
     else:
         status = Message_pb2.RegisterResponse(status="FAIL")
         serialized_msg = status.SerializeToString()
@@ -77,3 +76,4 @@ def serve():
 
 if __name__ == '__main__':
     serve()
+    

@@ -3,10 +3,10 @@ sys.path.insert(1, '../proto')
 
 from google.protobuf.timestamp_pb2 import Timestamp
 from datetime import datetime
-import uuid
+
 import Message_pb2
-import time
 import zmq
+import uuid
 
 unique_id = str(uuid.uuid1())
 
@@ -73,6 +73,7 @@ def publishArticles(client, server):
         else:
             print("Can not publish. Wrong Type") 
 
+
 def getArticles(client, server):
     print("Enter Details for Articles to fetch")
     info = ["", "", ""]
@@ -122,7 +123,6 @@ def getArticles(client, server):
                 type = "POLITICS"
 
             date = datetime.fromtimestamp(article.time_rec.seconds)
-
             print(str(cnt) + ") " + "\n" + type + "\n" + article.author + "\n" + str(date) + "\n" +  article.content)
             cnt+=1
         

@@ -4,7 +4,6 @@ sys.path.insert(1, '../proto')
 from google.protobuf.timestamp_pb2 import Timestamp
 
 import Message_pb2
-import time
 import zmq
 import datetime
 
@@ -37,7 +36,6 @@ def removeClient(uuid):
         if CLIENTELE[client][2] == uuid:
             del CLIENTELE[client]
             return 0
-    
     return 1
 
 
@@ -70,6 +68,7 @@ def PublishArticle(request):
             return Message_pb2.PublishArticlesResponse(status="SUCCESS")
 
     return Message_pb2.PublishArticlesResponse(status="FAIL")
+
 
 def GetArticles(request):
     articlesRequested = []

@@ -1,11 +1,11 @@
 import sys
 sys.path.insert(1, '../proto')
 
-import time
-import zmq
 import Message_pb2
+import zmq
+import time
 
-MAX_SERVER = 4
+MAX_SERVER = 2
 Servers = {}
 
 context = zmq.Context()
@@ -14,7 +14,6 @@ socket.bind("tcp://*:5556")
 
 
 def addServers(name, IP, port):
-
     if name in Servers.keys():
         return 1
 
@@ -38,8 +37,7 @@ def Register(request : Message_pb2.RegisterRequest):
         status = Message_pb2.RegisterResponse(status="SUCCESS")
         serialized_msg = status.SerializeToString()
         socket.send(serialized_msg)
-        time.sleep(1)
-        
+        time.sleep(1)  
     else:
         status = Message_pb2.RegisterResponse(status="FAIL")
         serialized_msg = status.SerializeToString()

@@ -49,14 +49,12 @@ class ArticleRequest(_message.Message):
     def __init__(self, type: _Optional[_Union[ArticleRequest.Type, str]] = ..., author: _Optional[str] = ..., time_rec: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ...) -> None: ...
 
 class GetArticlesRequest(_message.Message):
-    __slots__ = ["article", "typeOfRequest", "uuid"]
+    __slots__ = ["article", "uuid"]
     ARTICLE_FIELD_NUMBER: _ClassVar[int]
-    TYPEOFREQUEST_FIELD_NUMBER: _ClassVar[int]
     UUID_FIELD_NUMBER: _ClassVar[int]
     article: ArticleRequest
-    typeOfRequest: str
     uuid: str
-    def __init__(self, typeOfRequest: _Optional[str] = ..., uuid: _Optional[str] = ..., article: _Optional[_Union[ArticleRequest, _Mapping]] = ...) -> None: ...
+    def __init__(self, uuid: _Optional[str] = ..., article: _Optional[_Union[ArticleRequest, _Mapping]] = ...) -> None: ...
 
 class GetArticlesResponse(_message.Message):
     __slots__ = ["article"]
@@ -81,16 +79,14 @@ class GetServerListResponse(_message.Message):
     def __init__(self, serverDetails: _Optional[_Iterable[_Union[ServerAddress, _Mapping]]] = ...) -> None: ...
 
 class JoinServerRequest(_message.Message):
-    __slots__ = ["address", "name", "typeOfRequest", "uuid"]
+    __slots__ = ["address", "name", "uuid"]
     ADDRESS_FIELD_NUMBER: _ClassVar[int]
     NAME_FIELD_NUMBER: _ClassVar[int]
-    TYPEOFREQUEST_FIELD_NUMBER: _ClassVar[int]
     UUID_FIELD_NUMBER: _ClassVar[int]
     address: Address
     name: str
-    typeOfRequest: str
     uuid: str
-    def __init__(self, uuid: _Optional[str] = ..., name: _Optional[str] = ..., address: _Optional[_Union[Address, _Mapping]] = ..., typeOfRequest: _Optional[str] = ...) -> None: ...
+    def __init__(self, uuid: _Optional[str] = ..., name: _Optional[str] = ..., address: _Optional[_Union[Address, _Mapping]] = ...) -> None: ...
 
 class JoinServerResponse(_message.Message):
     __slots__ = ["status"]
@@ -99,12 +95,10 @@ class JoinServerResponse(_message.Message):
     def __init__(self, status: _Optional[str] = ...) -> None: ...
 
 class LeaveServerRequest(_message.Message):
-    __slots__ = ["typeOfRequest", "uuid"]
-    TYPEOFREQUEST_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ["uuid"]
     UUID_FIELD_NUMBER: _ClassVar[int]
-    typeOfRequest: str
     uuid: str
-    def __init__(self, uuid: _Optional[str] = ..., typeOfRequest: _Optional[str] = ...) -> None: ...
+    def __init__(self, uuid: _Optional[str] = ...) -> None: ...
 
 class LeaveServerResponse(_message.Message):
     __slots__ = ["status"]
@@ -113,14 +107,12 @@ class LeaveServerResponse(_message.Message):
     def __init__(self, status: _Optional[str] = ...) -> None: ...
 
 class PublishArticlesRequest(_message.Message):
-    __slots__ = ["article", "typeOfRequest", "uuid"]
+    __slots__ = ["article", "uuid"]
     ARTICLE_FIELD_NUMBER: _ClassVar[int]
-    TYPEOFREQUEST_FIELD_NUMBER: _ClassVar[int]
     UUID_FIELD_NUMBER: _ClassVar[int]
     article: ArticleFormat
-    typeOfRequest: str
     uuid: str
-    def __init__(self, typeOfRequest: _Optional[str] = ..., uuid: _Optional[str] = ..., article: _Optional[_Union[ArticleFormat, _Mapping]] = ...) -> None: ...
+    def __init__(self, uuid: _Optional[str] = ..., article: _Optional[_Union[ArticleFormat, _Mapping]] = ...) -> None: ...
 
 class PublishArticlesResponse(_message.Message):
     __slots__ = ["status"]

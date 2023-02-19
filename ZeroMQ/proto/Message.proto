@@ -71,26 +71,21 @@ message RegisterResponse{
 message JoinServerRequest{
     string uuid = 1;
     string name = 2;
-    Address address = 3;
-    string typeOfRequest = 4;
+    Address address = 3;;
 }
 
 message LeaveServerRequest{
-    string uuid = 1;
-    string typeOfRequest = 2;
+    string uuid = 1;;
 }
 
-message GetArticlesRequest{
-    string typeOfRequest = 1;
-    string uuid = 2;
-    ArticleRequest article = 3;
+message GetArticlesRequest{;
+    string uuid = 1;
+    ArticleRequest article = 2;
 }
 
 message PublishArticlesRequest{
-    string typeOfRequest = 1;
-    string uuid = 2;
-    ArticleFormat article = 3;
-    
+    string uuid = 1;
+    ArticleFormat article = 2;
 }
 
 message JoinServerResponse{
